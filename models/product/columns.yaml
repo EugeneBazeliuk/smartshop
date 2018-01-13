@@ -1,0 +1,16 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    title:
+        label: smartshop.catalog::lang.product.title
+        type: text
+        searchable: 1
+
+    sku:
+        label: smartshop.catalog::lang.product.sku
+        type: number
+        width: 1%
+        searchable: 1

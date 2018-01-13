@@ -1,0 +1,4 @@
+1.0.1:
+    - Initialize plugin.
+    - create_products_table.php
+    - create_meta_table.php

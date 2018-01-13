@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: smartshop.catalog::lang.product.label
+
+# Model Form Field configuration
+form: $/smartshop/catalog/models/product/fields.yaml
+
+# Model Class name
+modelClass: Smartshop\Catalog\Models\Product
+
+# Default redirect location
+defaultRedirect: smartshop/catalog/products
+
+# Create page
+create:
+    title: smartshop.catalog::lang.product.create
+    redirect: smartshop/catalog/products/update/:id
+    redirectClose: smartshop/catalog/products
+
+# Update page
+update:
+    title: smartshop.catalog::lang.product.update
+    redirect: smartshop/catalog/products
+    redirectClose: smartshop/catalog/products
+
+# Preview page
+preview:
+    title: smartshop.catalog::lang.product.preview

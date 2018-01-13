@@ -1,0 +1,11 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    # Filter by active state
+    is_active:
+        label: smartshop.catalog::lang.products.filter_is_active
+        type: checkbox
+        conditions: is_active = true

@@ -1,0 +1,95 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    title:
+        label: smartshop.catalog::lang.product.title
+        type: text
+        span: auto
+        required: true
+
+    slug:
+        label: smartshop.catalog::lang.product.slug
+        type: text
+        span: auto
+        required: true
+        preset:
+            field: title
+            type: slug
+
+tabs:
+    fields:
+
+        # Tab - General
+        sku:
+            tab: General
+            label: smartshop.catalog::lang.product.sku
+            type: text
+            span: auto
+            required: true
+
+        isbn:
+            tab: General
+            label: smartshop.catalog::lang.product.isbn
+            type: text
+            span: auto
+
+        price:
+            tab: General
+            label: smartshop.catalog::lang.product.price
+            type: number
+            span: auto
+            required: true
+
+        description:
+            tab: General
+            label: smartshop.catalog::lang.product.description
+            type: richeditor
+            size: large
+            span: full
+
+        # Tab - Sizes
+        width:
+            tab: Sizes
+            label: smartshop.catalog::lang.product.width
+            type: number
+            span: left
+
+        height:
+            tab: Sizes
+            label: smartshop.catalog::lang.product.height
+            type: number
+            span: left
+
+        depth:
+            tab: Sizes
+            label: smartshop.catalog::lang.product.depth
+            type: number
+            span: left
+
+        weight:
+            tab: Sizes
+            label: smartshop.catalog::lang.product.weight
+            type: number
+            span: left
+
+        # Tab - States
+        is_active:
+            tab: States
+            label: smartshop.catalog::lang.product.is_active
+            type: switch
+            default: 1
+
+        is_searchable:
+            tab: States
+            label: smartshop.catalog::lang.product.is_searchable
+            type: switch
+            default: 1
+
+        is_unique_text:
+            tab: States
+            label: smartshop.catalog::lang.product.is_unique_text
+            type: switch
+            default: 0
