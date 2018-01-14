@@ -1,0 +1,28 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    name:
+        label: smartshop.catalog::lang.category.name
+        type: text
+        searchable: 1
+
+    products_count:
+        label: smartshop.catalog::lang.category.products_count
+        relation: products_count
+        valueFrom: count
+        default: 0
+        sortable: false
+        width: 1%
+
+    is_searchable:
+        label: smartshop.catalog::lang.category.is_searchable
+        type: switch_colored
+        width: 1%
+
+    is_active:
+        label: smartshop.catalog::lang.category.is_active
+        type: switch_colored
+        width: 1%

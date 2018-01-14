@@ -1,0 +1,13 @@
+<div class="scoreboard">
+    <div data-control="toolbar">
+
+        <div class="scoreboard-item control-chart" data-control="chart-pie">
+            <ul>
+                <li data-color="#95b753"><?= e(trans('smartshop.catalog::lang.categories.count_is_active')) ?><span><?= $scoreboard['count_is_active'] ?></span></li>
+                <li data-color="#e5a91a"><?= e(trans('smartshop.catalog::lang.categories.count_is_disabled')) ?><span><?= $scoreboard['count_is_disabled'] ?></span></li>
+                <li data-color="#cc3300"><?= e(trans('smartshop.catalog::lang.categories.count_is_deleted')) ?><span><?= $scoreboard['count_is_deleted'] ?></span></li>
+            </ul>
+        </div>
+
+    </div>
+</div>

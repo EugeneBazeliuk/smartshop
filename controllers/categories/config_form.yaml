@@ -1,0 +1,25 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: smartshop.catalog::lang.category.label
+
+# Model Form Field configuration
+form: $/smartshop/catalog/models/category/fields.yaml
+
+# Model Class name
+modelClass: Smartshop\Catalog\Models\Category
+
+# Default redirect location
+defaultRedirect: smartshop/catalog/categories
+
+# Create page
+create:
+    redirect: smartshop/catalog/categories/update/:id
+    redirectClose: smartshop/catalog/categories
+
+# Update page
+update:
+    redirect: smartshop/catalog/categories
+    redirectClose: smartshop/catalog/categories

@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('smartshop/catalog/products') ?>"><?= e(trans('smartshop.catalog::lang.products.menu_label')) ?></a></li>
+        <li><a href="<?= Backend::url('smartshop/catalog/categories') ?>"><?= e(trans('smartshop.catalog::lang.categories.menu_label')) ?></a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -24,7 +24,7 @@
                data-request="onSave"
                data-request-data="redirect:0"
                data-hotkey="ctrl+s, cmd+s"
-               data-load-indicator="<?= e(trans('smartshop.catalog::lang.product.saving')) ?>"
+               data-load-indicator="<?= e(trans('smartshop.catalog::lang.category.saving')) ?>"
                class="btn btn-primary">
                <?= e(trans('backend::lang.form.save')) ?>
            </button>
@@ -33,7 +33,7 @@
                data-request="onSave"
                data-request-data="close:1"
                data-hotkey="ctrl+enter, cmd+enter"
-               data-load-indicator="<?= e(trans('smartshop.catalog::lang.product.saving')) ?>"
+               data-load-indicator="<?= e(trans('smartshop.catalog::lang.category.saving')) ?>"
                class="btn btn-default">
                <?= e(trans('backend::lang.form.save_and_close')) ?>
            </button>
@@ -41,11 +41,11 @@
                type="button"
                class="oc-icon-trash-o btn-icon danger pull-right"
                data-request="onDelete"
-               data-load-indicator="<?= e(trans('smartshop.catalog::lang.product.deleting')) ?>"
-               data-request-confirm="<?= e(trans('smartshop.catalog::lang.products.delete_confirm')) ?>">
+               data-load-indicator="<?= e(trans('smartshop.catalog::lang.category.deleting')) ?>"
+               data-request-confirm="<?= e(trans('smartshop.catalog::lang.categories.delete_confirm')) ?>">
            </button>
            <span class="btn-text">
-               <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('smartshop/catalog/products') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
+               <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('smartshop/catalog/categories') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
            </span>
         </div>
     </div>
@@ -70,7 +70,7 @@
 
     <div class="padded-container">
         <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-        <p><a href="<?= Backend::url('smartshop/catalog/products') ?>" class="btn btn-default"><?= e(trans('smartshop.catalog::lang.products.return_to_list')) ?></a></p>
+        <p><a href="<?= Backend::url('smartshop/catalog/categories') ?>" class="btn btn-default"><?= e(trans('smartshop.catalog::lang.categories.return_to_list')) ?></a></p>
     </div>
 
 <?php endif ?>

@@ -3,18 +3,23 @@
 use Model;
 
 /**
- * Product Model
+ * Category Model
+ *
+ * @property \SmartShop\Catalog\Models\Meta $meta
+ *
+ * @method \October\Rain\Database\Relations\MorphOne meta
  */
-class Product extends Model
+class Category extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\NestedTree;
     use \October\Rain\Database\Traits\SoftDelete;
     use \October\Rain\Database\Traits\Sluggable;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'smartshop_products';
+    public $table = 'smartshop_categories';
 
     /**
      * @var array Guarded fields
@@ -26,27 +31,18 @@ class Product extends Model
      */
     protected $fillable = [
         // Base
-        'title',
+        'name',
         'slug',
-        'sku',
-        'isbn',
-        'price',
         'description',
-        // Sizes
-        'width',
-        'height',
-        'depth',
-        'weight',
         // States
         'is_active',
         'is_searchable',
-        'is_unique_text'
     ];
 
     /**
      * @var array Generate slugs for these attributes.
      */
-    protected $slugs = ['slug' => 'title'];
+    protected $slugs = ['slug' => 'name'];
 
     /**
      * @var array Dates fields
@@ -54,10 +50,11 @@ class Product extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * @var array Relations
+     * @var array Relations BelongToMany
      */
     public $belongsToMany = [
-        'categories' => [Category::class, 'table' => 'smartshop_categories_products']
+        'products' => [Product::class, 'table' => 'smartshop_categories_products'],
+        'products_count' => [Product::class, 'table' => 'smartshop_categories_products', 'count' => true]
     ];
 
     /**
@@ -74,28 +71,23 @@ class Product extends Model
         'image' => 'System\Models\File'
     ];
 
+
+
     /** @var array Validation rules */
     public $rules = [
         // Base
-        'title' => ['required', 'max:255'],
-        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_products'],
-        'sku'   => ['required', 'numeric', 'unique:smartshop_products'],
-        'isbn'  => ['alpha_dash', 'max:25', 'unique:smartshop_products'],
-        'description' => ['nullable'],
-        // Sizes
-        'width'     => ['nullable', 'numeric'],
-        'height'    => ['nullable', 'numeric'],
-        'depth'     => ['nullable', 'numeric'],
-        'weight'    => ['nullable', 'numeric'],
+        'name'  => ['required', 'max:255'],
+        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_categories'],
+        'description'   => ['nullable'],
         // States
-        'is_active'         => ['boolean'],
-        'is_searchable'     => ['boolean'],
-        'is_unique_text'    => ['boolean'],
+        'is_active'     => ['boolean'],
+        'is_searchable' => ['boolean'],
     ];
 
     //
     //
     //
+
     /**
      * Sets the "url" attribute with a URL to this object
      * @param string $pageName

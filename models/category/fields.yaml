@@ -4,85 +4,34 @@
 
 fields:
 
-    title:
-        label: smartshop.catalog::lang.product.title
+    name:
+        label: smartshop.catalog::lang.category.name
         type: text
         span: auto
         required: true
 
     slug:
-        label: smartshop.catalog::lang.product.slug
+        label: smartshop.catalog::lang.category.slug
         type: text
         span: auto
         required: true
         preset:
-            field: title
+            field: name
             type: slug
+
 
 tabs:
     fields:
 
         # Tab - General
-        sku:
-            tab: General
-            label: smartshop.catalog::lang.product.sku
-            type: text
-            span: auto
-            required: true
-
-        isbn:
-            tab: General
-            label: smartshop.catalog::lang.product.isbn
-            type: text
-            span: auto
-
-        price:
-            tab: General
-            label: smartshop.catalog::lang.product.price
-            type: number
-            span: auto
-            required: true
-
         description:
             tab: General
-            label: smartshop.catalog::lang.product.description
+            label: smartshop.catalog::lang.category.description
             type: richeditor
             size: large
             span: full
 
-        # Tab - Categories
-        categories:
-            tab: Categories
-            label: smartshop.catalog::lang.product.categories
-            type: relation
-            span: left
-
-        # Tab - Sizes
-        width:
-            tab: Sizes
-            label: smartshop.catalog::lang.product.width
-            type: number
-            span: left
-
-        height:
-            tab: Sizes
-            label: smartshop.catalog::lang.product.height
-            type: number
-            span: left
-
-        depth:
-            tab: Sizes
-            label: smartshop.catalog::lang.product.depth
-            type: number
-            span: left
-
-        weight:
-            tab: Sizes
-            label: smartshop.catalog::lang.product.weight
-            type: number
-            span: left
-
-        # Tab - Meta
+        # Meta
         meta[meta_title]:
             tab: Meta
             label: smartshop.catalog::lang.meta.meta_title
@@ -143,16 +92,11 @@ secondaryTabs:
             imageWidth: 260
 
         is_active:
-            label: smartshop.catalog::lang.product.is_active
+            label: smartshop.catalog::lang.category.is_active
             type: switch
             default: 1
 
         is_searchable:
-            label: smartshop.catalog::lang.product.is_searchable
+            label: smartshop.catalog::lang.category.is_searchable
             type: switch
             default: 1
-
-        is_unique_text:
-            label: smartshop.catalog::lang.product.is_unique_text
-            type: switch
-            default: 0

@@ -3,43 +3,49 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use SmartShop\Catalog\Models\Meta;
-use Smartshop\Catalog\Models\Product;
+use SmartShop\Catalog\Models\Category;
 
 /**
- * Products Back-end Controller
+ * Categories Back-end Controller
  *
  * @mixin \Backend\Behaviors\FormController
  * @mixin \Backend\Behaviors\ListController
  */
-class Products extends Controller
+class Categories extends Controller
 {
     /**
      * @var array Extensions implemented by this controller.
      */
     public $implement = [
         \Backend\Behaviors\FormController::class,
-        \Backend\Behaviors\ListController::class
+        \Backend\Behaviors\ListController::class,
+        \Backend\Behaviors\ReorderController::class
     ];
 
     /**
-     * @var array `FormController` configuration.
+     * @var array FormController configuration.
      */
     public $formConfig = 'config_form.yaml';
 
     /**
-     * @var array `ListController` configuration.
+     * @var array ListController configuration.
      */
     public $listConfig = 'config_list.yaml';
 
     /**
-     * @var array `RelationController` configuration, by extension.
+     * @var array ReorderController configuration.
+     */
+    public $reorderConfig = 'config_reorder.yaml';
+
+    /**
+     * @var array RelationController configuration, by extension.
      */
     public $relationConfig;
 
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['smartshop.catalog.access_products'];
+    public $requiredPermissions = ['smartshop.catalog.access_categories'];
 
     /**
      * @var string HTML body tag class
@@ -50,7 +56,7 @@ class Products extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Smartshop.Catalog', 'catalog', 'products');
+        BackendMenu::setContext('Smartshop.Catalog', 'catalog', 'categories');
     }
 
     /**
@@ -58,7 +64,7 @@ class Products extends Controller
      */
     public function index()
     {
-        $model = new Product;
+        $model = new Category;
 
         $this->vars['scoreboard'] = [
             'count_is_active' => $model->where('is_active', 1)->count(),
@@ -66,7 +72,7 @@ class Products extends Controller
             'count_is_deleted' => $model->onlyTrashed()->count(),
         ];
 
-        return $this->asExtension('ListController')->index();
+        $this->asExtension('ListController')->index();
     }
 
     /**
@@ -81,5 +87,28 @@ class Products extends Controller
         }
 
         return $model;
+    }
+
+    /**
+     * @param Category $record
+     * @param null $definition
+     * @return string
+     */
+    public function listInjectRowClass($record, $definition = null)
+    {
+        if ($record->trashed()) {
+            return 'strike';
+        }
+
+        return null;
+    }
+
+    /**
+     * Extend list query
+     * @param \October\Rain\Database\Builder|Category $query
+     */
+    public function listExtendQuery($query)
+    {
+        $query->withTrashed();
     }
 }

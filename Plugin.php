@@ -42,6 +42,12 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-cube',
                         'url'         => Backend::url('smartshop/catalog/products'),
                         'permissions' => ['smartshop.catalog.access_products'],
+                    ],
+                    'categories' => [
+                        'label'       => 'smartshop.catalog::lang.categories.menu_label',
+                        'icon'        => 'icon-list',
+                        'url'         => Backend::url('smartshop/catalog/categories'),
+                        'permissions' => ['smartshop.catalog.access_categories'],
                     ]
                 ]
             ]
@@ -58,6 +64,10 @@ class Plugin extends PluginBase
             'smartshop.catalog.access_products' => [
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_products'
+            ],
+            'smartshop.catalog.access_categories' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_categories'
             ]
         ];
     }

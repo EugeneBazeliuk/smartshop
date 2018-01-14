@@ -8,7 +8,7 @@ class CreateMetasTable extends Migration
 {
     public function up()
     {
-        Schema::create('smartshop_catalog_meta', function(Blueprint $table) {
+        Schema::create('smartshop_meta', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             // Base
             $table->increments('id');
@@ -26,6 +26,6 @@ class CreateMetasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('smartshop_catalog_meta');
+        Schema::dropIfExists('smartshop_meta');
     }
 }

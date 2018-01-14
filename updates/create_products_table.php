@@ -8,7 +8,7 @@ class CreateProductsTable extends Migration
 {
     public function up()
     {
-        Schema::create('smartshop_catalog_products', function(Blueprint $table) {
+        Schema::create('smartshop_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             // Base
             $table->increments('id');
@@ -29,11 +29,12 @@ class CreateProductsTable extends Migration
             $table->boolean('is_unique_text')->default(0);
             // Timestamps
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('smartshop_catalog_products');
+        Schema::dropIfExists('smartshop_products');
     }
 }

@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-    <li><a href="<?= Backend::url('smartshop/catalog/products') ?>"><?= e(trans('smartshop.catalog::lang.products.menu_label')) ?></a></li>
+    <li><a href="<?= Backend::url('smartshop/catalog/categories') ?>"><?= e(trans('smartshop.catalog::lang.categories.menu_label')) ?></a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -33,7 +33,7 @@
 
     <div class="padded-container container-flush">
         <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-        <p><a href="<?= Backend::url('smartshop/catalog/products') ?>" class="btn btn-default"><?= e(trans('smartshop.catalog::lang.products.return_to_list')) ?></a></p>
+        <p><a href="<?= Backend::url('smartshop/catalog/categories') ?>" class="btn btn-default"><?= e(trans('smartshop.catalog::lang.categories.return_to_list')) ?></a></p>
     </div>
 
 <?php endif ?>
