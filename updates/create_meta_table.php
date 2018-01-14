@@ -15,6 +15,10 @@ class CreateMetasTable extends Migration
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('meta_keywords')->nullable();
+            $table->string('canonical_url')->nullable();
+            $table->string('redirect_url')->nullable();
+            $table->enum('robot_index', ['index', 'noindex'])->nullable();
+            $table->enum('robot_follow', ['follow', 'nofollow'])->nullable();
             // Relation
             $table->nullableMorphs('taggable');
         });

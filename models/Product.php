@@ -12,12 +12,31 @@ use Model;
  * @property string|null $isbn
  * @property float $price
  * @property string|null $description
+ * @property float|null $width
+ * @property float|null $height
+ * @property float|null $depth
+ * @property float|null $weight
  * @property int $is_active
  * @property int $is_searchable
  * @property int $is_unique_text
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- *
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereDepth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereIsSearchable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereIsUniqueText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereIsbn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereSku($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereWeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\Product whereWidth($value)
  */
 class Product extends Model
 {
@@ -39,6 +58,7 @@ class Product extends Model
     protected $fillable = [
         // Base
         'title',
+        'slug',
         'sku',
         'isbn',
         'price',
@@ -66,8 +86,9 @@ class Product extends Model
         // Base
         'title' => ['required', 'max:255'],
         'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_catalog_products'],
-        'sku'   => ['required', 'alpha_dash', 'max:25', 'unique:smartshop_catalog_products'],
+        'sku'   => ['required', 'numeric', 'unique:smartshop_catalog_products'],
         'isbn'  => ['alpha_dash', 'max:25', 'unique:smartshop_catalog_products'],
+        'description' => ['nullable'],
         // Sizes
         'width'     => ['nullable', 'numeric'],
         'height'    => ['nullable', 'numeric'],
