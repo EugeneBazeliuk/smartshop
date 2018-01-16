@@ -2,4 +2,7 @@
     - Initialize plugin.
     - create_products_table.php
     - create_categories_table.php
+    - create_publishers_table.php
+    - create_publisher_sets_table.php
     - create_meta_table.php
+    - seed_init.php

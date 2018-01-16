@@ -1,0 +1,25 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: smartshop.catalog::lang.publisher_set.label
+
+# Model Form Field configuration
+form: $/smartshop/catalog/models/publisherset/fields.yaml
+
+# Model Class name
+modelClass: Smartshop\Catalog\Models\PublisherSet
+
+# Default redirect location
+defaultRedirect: smartshop/catalog/publishersets
+
+# Create page
+create:
+    redirect: smartshop/catalog/publishersets/update/:id
+    redirectClose: smartshop/catalog/publishersets
+
+# Update page
+update:
+    redirect: smartshop/catalog/publishersets
+    redirectClose: smartshop/catalog/publishersets

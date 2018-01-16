@@ -1,0 +1,105 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    name:
+        label: smartshop.catalog::lang.publisher.name
+        type: text
+        span: auto
+        required: true
+
+    slug:
+        label: smartshop.catalog::lang.publisher.slug
+        type: text
+        span: auto
+        required: true
+        preset:
+            field: name
+            type: slug
+
+tabs:
+    fields:
+
+        # Tab - General
+        description:
+            tab: General
+            label: smartshop.catalog::lang.publisher.description
+            type: richeditor
+            size: large
+            span: full
+
+        relation_sets:
+            tab: Sets
+            type: partial
+            path: relation_sets
+
+        # Meta
+        meta[meta_title]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.meta_title
+            type: text
+
+        meta[meta_description]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.meta_description
+            type: textarea
+            size: tiny
+
+        meta[meta_keywords]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.meta_keywords
+            type: textarea
+            size: tiny
+
+        meta[canonical_url]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.canonical_url
+            type: text
+            span: left
+
+        meta[redirect_url]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.redirect_url
+            type: text
+            span: right
+
+        meta[robot_index]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.robot_index
+            type: dropdown
+            default: index
+            span: left
+            options:
+                index: Index
+                noindex: No index
+
+        meta[robot_follow]:
+            tab: Meta
+            label: smartshop.catalog::lang.meta.robot_follow
+            type: dropdown
+            default: follow
+            span: right
+            options:
+                follow: Follow
+                nofollow: No follow
+
+secondaryTabs:
+    fields:
+
+        image:
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260
+
+        is_active:
+            label: smartshop.catalog::lang.publisher.is_active
+            type: switch
+            default: 1
+
+        is_searchable:
+            label: smartshop.catalog::lang.publisher.is_searchable
+            type: switch
+            default: 1

@@ -1,0 +1,18 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    # Filter by publisher
+    category:
+        label: smartshop.catalog::lang.publisher_sets.filter_by_publisher
+        modelClass: Smartshop\Catalog\Models\Publisher
+        nameFrom: name
+        conditions: publisher_id in (:filtered)
+
+    # Filter by active state
+    is_active:
+        label: smartshop.catalog::lang.publisher_sets.filter_is_active
+        type: checkbox
+        conditions: is_active = true

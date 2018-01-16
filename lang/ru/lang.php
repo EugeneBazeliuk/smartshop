@@ -7,6 +7,9 @@ return [
         'menu_label' => 'Каталог',
         'tab' => 'Каталог товаров',
         'access_products' => 'Управление товарами',
+        'access_categories' => 'Управление категориями',
+        'access_publishers' => 'Управление издательствами',
+        'access_publisher_sets' => 'Управление сериями издательств',
         'access_settings' => 'Управление настройками каталога',
     ],
 
@@ -77,6 +80,71 @@ return [
         'slug' => 'Параметр URL',
         'description' => 'Полное описание категории',
         'products_count' => 'Количество товаров',
+        'is_active' => 'Статус',
+        'is_searchable' => 'Индексация',
+    ],
+
+    // Publishers
+    'publishers' => [
+        'menu_label' => 'Издательства',
+        'list_title' => 'Управление издательствами',
+        'new_publisher' => 'Создать издательство',
+        'return_to_list' => 'Вернуться к списку издательств',
+        'delete_confirm' => 'Вы действительно хотите удалить это издательство?',
+        // Scoreboard
+        'count_is_active' => 'Издательств активно',
+        'count_is_disabled' => 'Издательств отключено',
+        'count_is_deleted' => 'Издательств удалено'
+    ],
+    'publisher' => [
+        // Controls
+        'label' => 'Издательства',
+        'create' => 'Создать издательство',
+        'update' => 'Редактировать издательство',
+        'preview' => 'Просмотр издательства',
+        'creating' => 'Создание издательства',
+        'saving' => 'Сохранение издательства',
+        'deleting' => 'Удаление издательства',
+        // Fields
+        'name' => 'Название',
+        'slug' => 'Параметр URL',
+        'description' => 'Полное описание издательства',
+        'sets_count' => 'Количество серий',
+        'is_active' => 'Статус',
+        'is_searchable' => 'Индексация',
+    ],
+
+    // PublisherSets
+    'publisher_sets' => [
+        'menu_label' => 'Серии',
+        'list_title' => 'Управление сериями',
+        'new_set' => 'Создать серию',
+        'return_to_list' => 'Вернуться к списку серий',
+        'delete_confirm' => 'Вы действительно хотите удалить эту серию?',
+        // Filters
+        'filter_is_active' => 'Включены',
+        'filter_by_publisher' => 'Издательство',
+        // Scoreboard
+        'count_is_active' => 'Серий активно',
+        'count_is_disabled' => 'Серий отключено',
+        'count_is_deleted' => 'Серий удалено'
+    ],
+
+    'publisher_set' => [
+        // Controls
+        'label' => 'серии',
+        'create' => 'Создать серию',
+        'update' => 'Редактировать серию',
+        'preview' => 'Просмотр серии',
+        'creating' => 'Создание серии',
+        'saving' => 'Сохранение серии',
+        'deleting' => 'Удаление серии',
+        // Fields
+        'name' => 'Название',
+        'slug' => 'Параметр URL',
+        'publisher' => 'Издательство',
+        'publisher_empty' => '--- Выберите издательство ---',
+        'description' => 'Полное описание серии',
         'is_active' => 'Статус',
         'is_searchable' => 'Индексация',
     ],

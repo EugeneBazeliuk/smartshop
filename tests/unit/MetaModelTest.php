@@ -23,16 +23,18 @@ class MetaModelTest extends PluginTestCase {
         Meta::truncate();
 
         // Create Model
-        $meta = new Meta();
-        $meta->fill(self::$meta);
-        $meta->save();
+        $model = new Meta();
+        $model->fill(self::$meta);
 
-        // Assert Id
-        $this->assertEquals(1, $meta->id);
+        // Save Model
+        $model->save();
 
-        // Assert fields
+        // Assert model id
+        $this->assertEquals(1, $model->id);
+
+        // Assert model attributes
         foreach (self::$meta as $key => $val) {
-            $this->assertEquals($val, $meta->{$key});
+            $this->assertEquals($val, $model->{$key});
         }
     }
 }

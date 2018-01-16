@@ -1,0 +1,6 @@
+sets:
+    label: Sets
+    deferredBinding: true
+    readOnly: true
+    view:
+        list: $/smartshop/catalog/models/publisherset/columns.yaml

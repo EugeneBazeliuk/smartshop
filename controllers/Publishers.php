@@ -3,16 +3,16 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use SmartShop\Catalog\Models\Meta;
-use SmartShop\Catalog\Models\Category;
+use SmartShop\Catalog\Models\Publisher;
 
 /**
- * Categories Back-end Controller
+ * Publishers Back-end Controller
  *
  * @mixin \Backend\Behaviors\FormController
  * @mixin \Backend\Behaviors\ListController
- * @mixin \Backend\Behaviors\ReorderController
+ * @mixin \Backend\Behaviors\RelationController
  */
-class Categories extends Controller
+class Publishers extends Controller
 {
     /**
      * @var array Extensions implemented by this controller.
@@ -20,7 +20,7 @@ class Categories extends Controller
     public $implement = [
         \Backend\Behaviors\FormController::class,
         \Backend\Behaviors\ListController::class,
-        \Backend\Behaviors\ReorderController::class
+        \Backend\Behaviors\RelationController::class
     ];
 
     /**
@@ -34,19 +34,14 @@ class Categories extends Controller
     public $listConfig = 'config_list.yaml';
 
     /**
-     * @var array ReorderController configuration.
-     */
-    public $reorderConfig = 'config_reorder.yaml';
-
-    /**
      * @var array RelationController configuration, by extension.
      */
-    public $relationConfig;
+    public $relationConfig = 'config_relation.yaml';
 
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['smartshop.catalog.access_categories'];
+    public $requiredPermissions = ['smartshop.catalog.access_publishers'];
 
     /**
      * @var string HTML body tag class
@@ -57,7 +52,7 @@ class Categories extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Smartshop.Catalog', 'catalog', 'categories');
+        BackendMenu::setContext('Smartshop.Catalog', 'catalog', 'publishers');
     }
 
     /**
@@ -65,7 +60,7 @@ class Categories extends Controller
      */
     public function index()
     {
-        $model = new Category;
+        $model = new Publisher;
 
         $this->vars['scoreboard'] = [
             'count_is_active' => $model->where('is_active', 1)->count(),
@@ -91,7 +86,7 @@ class Categories extends Controller
     }
 
     /**
-     * @param Category $record
+     * @param Publisher $record
      * @param null $definition
      * @return string
      */
@@ -106,10 +101,22 @@ class Categories extends Controller
 
     /**
      * Extend list query
-     * @param \October\Rain\Database\Builder|Category $query
+     * @param \October\Rain\Database\Builder|Publisher $query
      */
     public function listExtendQuery($query)
     {
         $query->withTrashed();
     }
+
+
+
+//    /**
+//     * @param $config
+//     * @param $field
+//     * @param \Smartshop\Catalog\Models\PublisherSet $model
+//     */
+//    public function relationExtendConfig($config, $field, $model)
+//    {
+//        $model->withTrashed();
+//    }
 }

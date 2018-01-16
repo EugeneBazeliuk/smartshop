@@ -48,6 +48,18 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-list',
                         'url'         => Backend::url('smartshop/catalog/categories'),
                         'permissions' => ['smartshop.catalog.access_categories'],
+                    ],
+                    'publishers' => [
+                        'label'       => 'smartshop.catalog::lang.publishers.menu_label',
+                        'icon'        => 'icon-book',
+                        'url'         => Backend::url('smartshop/catalog/publishers'),
+                        'permissions' => ['smartshop.catalog.access_publishers'],
+                    ],
+                    'publishersets' => [
+                        'label'       => 'smartshop.catalog::lang.publisher_sets.menu_label',
+                        'icon'        => 'icon-book',
+                        'url'         => Backend::url('smartshop/catalog/publishersets'),
+                        'permissions' => ['smartshop.catalog.access_publisher_sets'],
                     ]
                 ]
             ]
@@ -68,6 +80,14 @@ class Plugin extends PluginBase
             'smartshop.catalog.access_categories' => [
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_categories'
+            ],
+            'smartshop.catalog.access_publishers' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_publishers'
+            ],
+            'smartshop.catalog.access_publisher_sets' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_publisher_sets'
             ]
         ];
     }

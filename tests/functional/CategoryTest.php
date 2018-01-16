@@ -10,7 +10,7 @@ class CategoryTest extends UiTestCase
         'slug' => 'test-slug',
     ];
 
-    public function test_create_product()
+    public function test_create_category()
     {
         $this->signInToBackend();
         $this->open('backend/smartshop/catalog/categories/create');

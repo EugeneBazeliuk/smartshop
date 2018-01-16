@@ -2,14 +2,15 @@
 
 use PluginTestCase;
 use SmartShop\Catalog\Models\Meta;
-use Smartshop\Catalog\Models\Category;
+use Smartshop\Catalog\Models\Publisher;
+use Smartshop\Catalog\Models\PublisherSet;
 
 /**
  * Class MetaModelTest
  */
-class CategoryModelTest extends PluginTestCase
+class PublisherSetModelTest extends PluginTestCase
 {
-    public static $category = [
+    public static $publisherSet = [
         // Base
         'name' => 'Test Name',
         'slug' => 'test-slug',
@@ -19,16 +20,20 @@ class CategoryModelTest extends PluginTestCase
         'is_searchable' => true,
     ];
 
-    public function test_create_category()
+    public function test_Create_publisher()
     {
-        Category::truncate();
+        PublisherSet::truncate();
 
-        $model = new Category();
-        $model->fill(self::$category);
+        // Create model
+        $model = new PublisherSet;
+        $model->fill(self::$publisherSet);
 
         // Create Meta Relation
         $model->meta = new Meta();
         $model->meta->fill(MetaModelTest::$meta);
+
+        // Create Publisher Relation
+        $model->publisher = Publisher::create(PublisherModelTest::$publisher);
 
         // Save Model
         $model->save();
@@ -37,13 +42,18 @@ class CategoryModelTest extends PluginTestCase
         $this->assertEquals(1, $model->id);
 
         // Assert model attributes
-        foreach (self::$category as $key => $val) {
+        foreach (self::$publisherSet as $key => $val) {
             $this->assertEquals($val, $model->{$key});
         }
 
         // Assert model meta attributes
         foreach (MetaModelTest::$meta as $key => $val) {
             $this->assertEquals($val, $model->meta->{$key});
+        }
+
+        // Assert model publisher attributes
+        foreach (PublisherModelTest::$publisher as $key => $val) {
+            $this->assertEquals($val, $model->publisher->{$key});
         }
     }
 }

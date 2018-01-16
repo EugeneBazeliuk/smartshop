@@ -4,12 +4,20 @@ use Model;
 
 /**
  * Product Model
+ *
+ * @property \October\Rain\Database\Collection $categories
+ * @property \Smartshop\Catalog\Models\Meta $meta
+ * @property \System\Models\File $image
+ *
+ * @method \October\Rain\Database\Relations\BelongToMany categories
+ * @method \October\Rain\Database\Relations\MorphOne meta
+ * @method \October\Rain\Database\Relations\AttachOne image
  */
 class Product extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\SoftDelete;
     use \October\Rain\Database\Traits\Sluggable;
+    use \October\Rain\Database\Traits\SoftDelete;
 
     /**
      * @var string The database table used by the model.
@@ -64,7 +72,7 @@ class Product extends Model
      * @var array Relations MorphOne
      */
     public $morphOne = [
-        'meta' => ['Smartshop\Catalog\Models\Meta', 'name' => 'taggable'],
+        'meta' => [Meta::class, 'name' => 'taggable'],
     ];
 
     /**

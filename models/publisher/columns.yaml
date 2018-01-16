@@ -1,0 +1,20 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    name:
+        label: smartshop.catalog::lang.publisher.name
+        type: text
+        searchable: 1
+
+    is_searchable:
+        label: smartshop.catalog::lang.publisher.is_searchable
+        type: switch_colored
+        width: 1%
+
+    is_active:
+        label: smartshop.catalog::lang.publisher.is_active
+        type: switch_colored
+        width: 1%

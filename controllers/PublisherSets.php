@@ -3,24 +3,22 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use SmartShop\Catalog\Models\Meta;
-use SmartShop\Catalog\Models\Category;
+use Smartshop\Catalog\Models\PublisherSet;
 
 /**
- * Categories Back-end Controller
+ * Publisher Sets Back-end Controller
  *
  * @mixin \Backend\Behaviors\FormController
  * @mixin \Backend\Behaviors\ListController
- * @mixin \Backend\Behaviors\ReorderController
  */
-class Categories extends Controller
+class PublisherSets extends Controller
 {
     /**
      * @var array Extensions implemented by this controller.
      */
     public $implement = [
         \Backend\Behaviors\FormController::class,
-        \Backend\Behaviors\ListController::class,
-        \Backend\Behaviors\ReorderController::class
+        \Backend\Behaviors\ListController::class
     ];
 
     /**
@@ -34,11 +32,6 @@ class Categories extends Controller
     public $listConfig = 'config_list.yaml';
 
     /**
-     * @var array ReorderController configuration.
-     */
-    public $reorderConfig = 'config_reorder.yaml';
-
-    /**
      * @var array RelationController configuration, by extension.
      */
     public $relationConfig;
@@ -46,7 +39,7 @@ class Categories extends Controller
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['smartshop.catalog.access_categories'];
+    public $requiredPermissions = ['smartshop.catalog.access_publisher_sets'];
 
     /**
      * @var string HTML body tag class
@@ -57,7 +50,7 @@ class Categories extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Smartshop.Catalog', 'catalog', 'categories');
+        BackendMenu::setContext('Smartshop.Catalog', 'catalog', 'publishersets');
     }
 
     /**
@@ -65,7 +58,7 @@ class Categories extends Controller
      */
     public function index()
     {
-        $model = new Category;
+        $model = new PublisherSet;
 
         $this->vars['scoreboard'] = [
             'count_is_active' => $model->where('is_active', 1)->count(),
@@ -91,7 +84,7 @@ class Categories extends Controller
     }
 
     /**
-     * @param Category $record
+     * @param \Smartshop\Catalog\Models\PublisherSet $record
      * @param null $definition
      * @return string
      */
@@ -106,7 +99,7 @@ class Categories extends Controller
 
     /**
      * Extend list query
-     * @param \October\Rain\Database\Builder|Category $query
+     * @param \October\Rain\Database\Builder|PublisherSet $query
      */
     public function listExtendQuery($query)
     {

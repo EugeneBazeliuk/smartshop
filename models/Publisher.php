@@ -3,27 +3,24 @@
 use Model;
 
 /**
- * Category Model
+ * Publisher Model
  *
- * @property \October\Rain\Database\Collection $products
- * @property \SmartShop\Catalog\Models\Meta $meta
+ * @property \October\Rain\Database\Collection $sets
  * @property \System\Models\File $image
  *
- * @method \October\Rain\Database\Relations\BelongToMany products
- * @method \October\Rain\Database\Relations\MorphOne meta
+ * @method \October\Rain\Database\Relations\hasMany sets
  * @method \October\Rain\Database\Relations\AttachOne image
  */
-class Category extends Model
+class Publisher extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\NestedTree;
     use \October\Rain\Database\Traits\Sluggable;
     use \October\Rain\Database\Traits\SoftDelete;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'smartshop_categories';
+    public $table = 'smartshop_publishers';
 
     /**
      * @var array Guarded fields
@@ -54,18 +51,19 @@ class Category extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * @var array Relations BelongToMany
+     * @var array Relations HasMany
      */
-    public $belongsToMany = [
-        'products' => [Product::class, 'table' => 'smartshop_categories_products'],
-        'products_count' => [Product::class, 'table' => 'smartshop_categories_products', 'count' => true]
+    public $hasMany = [
+        'sets' => [
+            PublisherSet::class
+        ]
     ];
 
     /**
      * @var array Relations MorphOne
      */
     public $morphOne = [
-        'meta' => [Meta::class, 'name' => 'taggable'],
+        'meta' => ['Smartshop\Catalog\Models\Meta', 'name' => 'taggable'],
     ];
 
     /**
@@ -79,7 +77,7 @@ class Category extends Model
     public $rules = [
         // Base
         'name'  => ['required', 'max:255'],
-        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_categories'],
+        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_publishers'],
         'description'   => ['nullable'],
         // States
         'is_active'     => ['boolean'],

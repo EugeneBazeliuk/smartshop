@@ -2,14 +2,14 @@
 
 use PluginTestCase;
 use SmartShop\Catalog\Models\Meta;
-use Smartshop\Catalog\Models\Category;
+use Smartshop\Catalog\Models\Publisher;
 
 /**
  * Class MetaModelTest
  */
-class CategoryModelTest extends PluginTestCase
+class PublisherModelTest extends PluginTestCase
 {
-    public static $category = [
+    public static $publisher = [
         // Base
         'name' => 'Test Name',
         'slug' => 'test-slug',
@@ -19,12 +19,13 @@ class CategoryModelTest extends PluginTestCase
         'is_searchable' => true,
     ];
 
-    public function test_create_category()
+    public function test_Create_publisher()
     {
-        Category::truncate();
+        Publisher::truncate();
 
-        $model = new Category();
-        $model->fill(self::$category);
+        // Create model
+        $model = new Publisher();
+        $model->fill(self::$publisher);
 
         // Create Meta Relation
         $model->meta = new Meta();
@@ -33,17 +34,22 @@ class CategoryModelTest extends PluginTestCase
         // Save Model
         $model->save();
 
-        // Assert model id
+        // Create PublisherSet Relation
+        $model->sets()->create(PublisherSetModelTest::$publisherSet);
+
+        // Assert Id
         $this->assertEquals(1, $model->id);
 
         // Assert model attributes
-        foreach (self::$category as $key => $val) {
+        foreach (self::$publisher as $key => $val) {
             $this->assertEquals($val, $model->{$key});
         }
 
-        // Assert model meta attributes
+        // Assert product meta fields
         foreach (MetaModelTest::$meta as $key => $val) {
             $this->assertEquals($val, $model->meta->{$key});
         }
+
+        $this->assertEquals(1, $model->sets()->count());
     }
 }

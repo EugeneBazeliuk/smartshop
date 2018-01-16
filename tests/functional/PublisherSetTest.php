@@ -1,33 +1,27 @@
 <?php
 
 /**
- * Class ProductsTest
+ * Class PublisherTest
  */
-class ProductsTest extends UiTestCase
+class PublisherSetTest extends UiTestCase
 {
-    public $validProduct = [
-        'title' => 'Test title',
+    public $validPublisher = [
+        'name' => 'Test name',
         'slug' => 'test-slug',
-        'sku' => '111111',
-        'isbn' => '12345678',
-        'price' => '110.12',
-        'width' => '11.12',
-        'height' => '12.13',
-        'depth' => '13.14'
     ];
 
-    public function test_create_product()
+    public function test_create_publisher()
     {
         $this->signInToBackend();
-        $this->open('backend/smartshop/catalog/products/create');
+        $this->open('backend/smartshop/catalog/publishersets/create');
         $this->waitForPageToLoad(TEST_SELENIUM_TIMEOUT);
 
         // Check form
         try {
             // Check fields
-            foreach ($this->validProduct as $name => $value) {
-                $this->assertTrue($this->isElementPresent('name=Product['.$name.']'));
-                $this->type('name=Product['.$name.']', $value);
+            foreach ($this->validPublisher as $name => $value) {
+                $this->assertTrue($this->isElementPresent('name=PublisherSet['.$name.']'));
+                $this->type('name=PublisherSet['.$name.']', $value);
             }
             // Create a product
             $this->click("xpath=(//button[@data-request='onSave'])[1]");

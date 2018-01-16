@@ -28,31 +28,32 @@ class ProductModelTest extends PluginTestCase
         'is_unique_text' => true
     ];
 
-    public function testCreateProduct()
+    public function test_create_product()
     {
         Product::truncate();
 
-        // Create product
-        $product = new Product;
-        $product->fill(self::$product);
-        $product->save();
+        // Create model
+        $model =new Product;
+        $model->fill(self::$product);
 
-        // Create product meta
-        $product->meta = new Meta();
-        $product->meta->fill(MetaModelTest::$meta);
-        $product->meta->save();
+        // Create Meta Relation
+        $model->meta = new Meta();
+        $model->meta->fill(MetaModelTest::$meta);
 
-        // Assert Id
-        $this->assertEquals(1, $product->id);
+        // Save Model
+        $model->save();
 
-        // Assert product fields
+        // Assert model id
+        $this->assertEquals(1, $model->id);
+
+        // Assert model attributes
         foreach (self::$product as $key => $val) {
-            $this->assertEquals($val, $product->{$key});
+            $this->assertEquals($val, $model->{$key});
         }
 
-        // Assert product meta fields
+        // Assert model meta attributes
         foreach (MetaModelTest::$meta as $key => $val) {
-            $this->assertEquals($val, $product->meta->{$key});
+            $this->assertEquals($val, $model->meta->{$key});
         }
     }
 }
