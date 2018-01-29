@@ -28,7 +28,7 @@ class CreateCategoriesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('smartshop_categories_products', function(Blueprint $table) {
+        Schema::create('smartshop_category_product', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->integer('category_id')->unsigned();
             $table->integer('product_id')->unsigned();
@@ -39,6 +39,6 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('smartshop_categories');
-        Schema::dropIfExists('smartshop_categories_products');
+        Schema::dropIfExists('smartshop_category_product');
     }
 }

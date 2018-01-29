@@ -20,7 +20,7 @@ class PublisherSetModelTest extends PluginTestCase
         'is_searchable' => true,
     ];
 
-    public function test_Create_publisher()
+    public function test_Create_publisher_set()
     {
         PublisherSet::truncate();
 

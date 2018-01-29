@@ -33,6 +33,9 @@ class CategoryModelTest extends PluginTestCase
         // Save Model
         $model->save();
 
+        // Create Related Categories Model
+        $model->products()->create(ProductModelTest::$product);
+
         // Assert model id
         $this->assertEquals(1, $model->id);
 
@@ -45,5 +48,8 @@ class CategoryModelTest extends PluginTestCase
         foreach (MetaModelTest::$meta as $key => $val) {
             $this->assertEquals($val, $model->meta->{$key});
         }
+
+        // Assert Related Products Model
+        $this->assertEquals(1, $model->products()->count());
     }
 }

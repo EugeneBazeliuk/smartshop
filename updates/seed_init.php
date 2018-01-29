@@ -12,6 +12,7 @@ class SeedInitial extends \October\Rain\Database\Updates\Seeder
     {
         if (App::environment() !== 'testing') {
             $this->call(\SmartShop\Catalog\Seeders\ProductSeeder::class);
+            $this->call(\SmartShop\Catalog\Seeders\ProductPropertySeeder::class);
             $this->call(\SmartShop\Catalog\Seeders\CategorySeeder::class);
             $this->call(\SmartShop\Catalog\Seeders\PublisherSeeder::class);
             $this->call(\SmartShop\Catalog\Seeders\PublisherSetSeeder::class);

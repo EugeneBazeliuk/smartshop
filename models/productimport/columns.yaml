@@ -1,0 +1,22 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    title: smartshop.catalog::lang.product.title
+    slug: smartshop.catalog::lang.product.slug
+    sku: smartshop.catalog::lang.product.sku
+    isbn: smartshop.catalog::lang.product.isbn
+    price: smartshop.catalog::lang.product.price
+    width: smartshop.catalog::lang.product.width
+    height: smartshop.catalog::lang.product.height
+    depth: smartshop.catalog::lang.product.depth
+    weight: smartshop.catalog::lang.product.weight
+    publisher: smartshop.catalog::lang.product.publisher
+    publisher_set: smartshop.catalog::lang.product.publisher_set
+    categories: smartshop.catalog::lang.product.categories
+    properties: smartshop.catalog::lang.product.properties
+    description: smartshop.catalog::lang.product.description
+    is_active: smartshop.catalog::lang.product.is_active
+    is_searchable: smartshop.catalog::lang.product.is_searchable
+    is_unique_text: smartshop.catalog::lang.product.is_unique_text

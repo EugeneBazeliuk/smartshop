@@ -10,6 +10,8 @@ use Smartshop\Catalog\Models\Product;
  *
  * @mixin \Backend\Behaviors\FormController
  * @mixin \Backend\Behaviors\ListController
+ * @mixin \Backend\Behaviors\RelationController
+ * @mixin \Backend\Behaviors\ImportExportController
  */
 class Products extends Controller
 {
@@ -18,7 +20,9 @@ class Products extends Controller
      */
     public $implement = [
         \Backend\Behaviors\FormController::class,
-        \Backend\Behaviors\ListController::class
+        \Backend\Behaviors\ListController::class,
+        \Backend\Behaviors\RelationController::class,
+        \Backend\Behaviors\ImportExportController::class
     ];
 
     /**
@@ -32,9 +36,14 @@ class Products extends Controller
     public $listConfig = 'config_list.yaml';
 
     /**
-     * @var array `RelationController` configuration, by extension.
+     * @var array RelationController configuration, by extension.
      */
-    public $relationConfig;
+    public $relationConfig = 'config_relation.yaml';
+
+    /**
+     * @var array ImportExportController configuration.
+     */
+    public $importExportConfig = 'config_import_export.yaml';
 
     /**
      * @var array Permissions required to view this page.
@@ -68,6 +77,25 @@ class Products extends Controller
 
         return $this->asExtension('ListController')->index();
     }
+
+    /**
+     *
+     */
+    public function export()
+    {
+        $this->bodyClass = '';
+        $this->asExtension('ImportExportController')->export();
+    }
+
+    /**
+     *
+     */
+    public function import()
+    {
+        $this->bodyClass = '';
+        $this->asExtension('ImportExportController')->import();
+    }
+
 
     /**
      * Extend Form Model

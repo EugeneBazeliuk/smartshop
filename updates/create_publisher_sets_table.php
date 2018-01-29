@@ -16,7 +16,7 @@ class CreatePublisherSetsTable extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             // Relations
-            $table->integer('publisher_id')->unsigned()->nullable();
+            $table->integer('publisher_id')->unsigned();
             // States
             $table->boolean('is_active')->default(0);
             $table->boolean('is_searchable')->default(0);

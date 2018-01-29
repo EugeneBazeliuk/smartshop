@@ -77,12 +77,16 @@ class Publisher extends Model
     public $rules = [
         // Base
         'name'  => ['required', 'max:255'],
-        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_publishers'],
-        'description'   => ['nullable'],
+        'slug'  => ['required:update', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_publishers'],
         // States
         'is_active'     => ['boolean'],
         'is_searchable' => ['boolean'],
     ];
+
+    /**
+     * @var array Cache for nameList() method
+     */
+    protected static $nameList = null;
 
     //
     //
@@ -102,5 +106,17 @@ class Publisher extends Model
         ];
 
         return $this->url = $controller->pageUrl($pageName, $params);
+    }
+
+    /**
+     *
+     */
+    public static function getNameList()
+    {
+        if (self::$nameList) {
+            return self::$nameList;
+        }
+
+        return self::$nameList = self::lists('name', 'id');
     }
 }

@@ -1,6 +1,7 @@
 1.0.1:
     - Initialize plugin.
     - create_products_table.php
+    - create_product_properties_table.php
     - create_categories_table.php
     - create_publishers_table.php
     - create_publisher_sets_table.php

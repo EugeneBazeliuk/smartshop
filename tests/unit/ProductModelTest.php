@@ -33,7 +33,7 @@ class ProductModelTest extends PluginTestCase
         Product::truncate();
 
         // Create model
-        $model =new Product;
+        $model = new Product;
         $model->fill(self::$product);
 
         // Create Meta Relation
@@ -42,6 +42,13 @@ class ProductModelTest extends PluginTestCase
 
         // Save Model
         $model->save();
+
+        // Create Related Categories Model
+        $model->categories()->create(CategoryModelTest::$category);
+
+        // Create Related Properties Model
+        $model->properties()->create(ProductPropertyModelTest::$productProperty);
+
 
         // Assert model id
         $this->assertEquals(1, $model->id);
@@ -55,5 +62,11 @@ class ProductModelTest extends PluginTestCase
         foreach (MetaModelTest::$meta as $key => $val) {
             $this->assertEquals($val, $model->meta->{$key});
         }
+
+        // Assert Related Categories Model
+        $this->assertEquals(1, $model->categories()->count());
+
+        // Assert Related Properties Model
+        $this->assertEquals(1, $model->properties()->count());
     }
 }

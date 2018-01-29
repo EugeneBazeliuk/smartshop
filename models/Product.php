@@ -6,10 +6,16 @@ use Model;
  * Product Model
  *
  * @property \October\Rain\Database\Collection $categories
+ * @property \October\Rain\Database\Collection $properties
+ * @property \SmartShop\Catalog\Models\Publisher $publisher
+ * @property \SmartShop\Catalog\Models\PublisherSet $publisher_set
  * @property \Smartshop\Catalog\Models\Meta $meta
  * @property \System\Models\File $image
  *
- * @method \October\Rain\Database\Relations\BelongToMany categories
+ * @method \October\Rain\Database\Relations\BelongsTo publisher
+ * @method \October\Rain\Database\Relations\BelongsTo publisher_set
+ * @method \October\Rain\Database\Relations\BelongsToMany categories
+ * @method \October\Rain\Database\Relations\BelongsToMany properties
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
  */
@@ -62,10 +68,31 @@ class Product extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * @var array Relations
+     * @var array Relations BelongTo
+     */
+    public $belongsTo = [
+        'publisher' => [Publisher::class],
+        'publisher_set' => [PublisherSet::class],
+    ];
+
+    /**
+     * @var array Relations BelongToMany
      */
     public $belongsToMany = [
-        'categories' => [Category::class, 'table' => 'smartshop_categories_products']
+        'categories' => [
+            Category::class,
+            'table' => 'smartshop_category_product',
+            'key' => 'product_id',
+            'otherKey' => 'category_id',
+        ],
+        'properties' => [
+            ProductProperty::class,
+            'table' => 'smartshop_product_property',
+            'key'      => 'product_id',
+            'otherKey' => 'property_id',
+            'pivot'    => ['property_value_id'],
+            'pivotModel' => ProductPropertyPivot::class
+        ]
     ];
 
     /**
@@ -86,20 +113,40 @@ class Product extends Model
     public $rules = [
         // Base
         'title' => ['required', 'max:255'],
-        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_products'],
+        'slug'  => ['required:update', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_products'],
         'sku'   => ['required', 'numeric', 'unique:smartshop_products'],
         'isbn'  => ['alpha_dash', 'max:25', 'unique:smartshop_products'],
-        'description' => ['nullable'],
+        'price' => ['required', 'numeric'],
         // Sizes
-        'width'     => ['nullable', 'numeric'],
-        'height'    => ['nullable', 'numeric'],
-        'depth'     => ['nullable', 'numeric'],
-        'weight'    => ['nullable', 'numeric'],
-        // States
-        'is_active'         => ['boolean'],
-        'is_searchable'     => ['boolean'],
-        'is_unique_text'    => ['boolean'],
+        'width'     => ['numeric'],
+        'height'    => ['numeric'],
+        'depth'     => ['numeric'],
+        'weight'    => ['numeric'],
     ];
+
+    //
+    // Options
+    //
+
+    /**
+     * Get Publisher Options
+     * @return array
+     */
+    public function getPublisherOptions()
+    {
+        return Publisher::getNameList();
+    }
+
+    /**
+     * Get Publisher Set Options
+     * @param $value
+     * @param $data self
+     * @return array
+     */
+    public function getPublisherSetOptions($value, $data)
+    {
+        return PublisherSet::getNameList($data->publisher_id);
+    }
 
     //
     //

@@ -1,0 +1,10 @@
+properties:
+    label: Свойства
+    view:
+        toolbarButtons: add|remove
+        recordsPerPage: 10
+        list: $/smartshop/catalog/models/productpropertypivot/columns.yaml
+    manage:
+        list: $/smartshop/catalog/models/productpropertypivot/columns.yaml
+    pivot:
+        form: $/smartshop/catalog/models/productpropertypivot/fields.yaml

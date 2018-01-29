@@ -1,6 +1,24 @@
 <div data-control="toolbar">
+
     <a  href="<?= Backend::url('smartshop/catalog/products/create') ?>"
         class="btn btn-primary oc-icon-plus">
         <?= e(trans('smartshop.catalog::lang.products.new_product')) ?>
     </a>
+
+    <?php if ($this->user->hasAnyAccess(['smartshop.catalog.access_import_export'])): ?>
+
+        <div class="btn-group">
+
+            <a  href="<?= Backend::url('smartshop/catalog/products/export') ?>"
+                class="btn btn-default oc-icon-download">
+                <?= e(trans('smartshop.catalog::lang.products.export_product')) ?></a>
+
+            <a  href="<?= Backend::url('smartshop/catalog/products/import') ?>"
+                class="btn btn-default oc-icon-upload">
+                <?= e(trans('smartshop.catalog::lang.products.import_product')) ?></a>
+
+        </div>
+
+    <?php endif ?>
+
 </div>

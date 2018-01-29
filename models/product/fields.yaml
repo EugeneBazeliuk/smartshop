@@ -36,6 +36,21 @@ tabs:
             type: text
             span: auto
 
+        publisher:
+            tab: General
+            label: smartshop.catalog::lang.product.publisher
+            type: dropdown
+            span: auto
+            emptyOption: smartshop.catalog::lang.product.publisher_empty
+
+        publisher_set:
+            tab: General
+            label: smartshop.catalog::lang.product.publisher_set
+            type: dropdown
+            span: auto
+            emptyOption: smartshop.catalog::lang.product.publisher_set_empty
+            dependsOn: publisher
+
         price:
             tab: General
             label: smartshop.catalog::lang.product.price
@@ -56,6 +71,12 @@ tabs:
             label: smartshop.catalog::lang.product.categories
             type: relation
             span: left
+
+        # Tab - Properties
+        properties:
+            tab: Properties
+            type: partial
+            path: relation_properties
 
         # Tab - Sizes
         width:

@@ -38,6 +38,7 @@ class PublisherSet extends Model
         'name',
         'slug',
         'description',
+        'publisher_id',
         // States
         'is_active',
         'is_searchable',
@@ -64,7 +65,9 @@ class PublisherSet extends Model
         'deleted_at'
     ];
 
-    /** @var array Relations */
+    /**
+     * @var array Relations BelongTo
+     */
     public $belongsTo = [
         'publisher' => [Publisher::class],
     ];
@@ -88,11 +91,15 @@ class PublisherSet extends Model
         // Base
         'name'  => ['required', 'max:255'],
         'slug'  => ['required:update', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_publisher_sets'],
-        'description'   => ['nullable'],
         // States
         'is_active'     => ['boolean'],
         'is_searchable' => ['boolean'],
     ];
+
+    /**
+     * @var array Cache for nameList() method
+     */
+    protected static $nameList = [];
 
     //
     //
@@ -112,5 +119,17 @@ class PublisherSet extends Model
         ];
 
         return $this->url = $controller->pageUrl($pageName, $params);
+    }
+
+    /**
+     *
+     */
+    public static function getNameList($publisherId)
+    {
+        if (isset(self::$nameList[$publisherId])) {
+            return self::$nameList[$publisherId];
+        }
+
+        return self::$nameList[$publisherId] = self::wherePublisherId($publisherId)->lists('name', 'id');
     }
 }

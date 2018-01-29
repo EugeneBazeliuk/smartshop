@@ -9,7 +9,7 @@ use Model;
  * @property \SmartShop\Catalog\Models\Meta $meta
  * @property \System\Models\File $image
  *
- * @method \October\Rain\Database\Relations\BelongToMany products
+ * @method \October\Rain\Database\Relations\BelongsToMany products
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
  */
@@ -57,8 +57,15 @@ class Category extends Model
      * @var array Relations BelongToMany
      */
     public $belongsToMany = [
-        'products' => [Product::class, 'table' => 'smartshop_categories_products'],
-        'products_count' => [Product::class, 'table' => 'smartshop_categories_products', 'count' => true]
+        'products' => [
+            Product::class,
+            'table' => 'smartshop_category_product'
+        ],
+        'products_count' => [
+            Product::class,
+            'table' => 'smartshop_category_product',
+            'count' => true
+        ]
     ];
 
     /**
@@ -79,7 +86,7 @@ class Category extends Model
     public $rules = [
         // Base
         'name'  => ['required', 'max:255'],
-        'slug'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_categories'],
+        'slug'  => ['required:update', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'max:255', 'unique:smartshop_categories'],
         'description'   => ['nullable'],
         // States
         'is_active'     => ['boolean'],

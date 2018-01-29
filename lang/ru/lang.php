@@ -1,17 +1,22 @@
 <?php
 
 return [
+
+    // Plugin
     'plugin' => [
         'name' => 'Каталог товаров',
         'description' => 'Управление товарами',
         'menu_label' => 'Каталог',
         'tab' => 'Каталог товаров',
         'access_products' => 'Управление товарами',
+        'access_import_export' => 'Управление импортом и экспортом',
         'access_categories' => 'Управление категориями',
         'access_publishers' => 'Управление издательствами',
         'access_publisher_sets' => 'Управление сериями издательств',
+        'access_product_properties' => 'Управление свойствами товара',
         'access_settings' => 'Управление настройками каталога',
     ],
+
 
     // Products
     'products' => [
@@ -20,6 +25,9 @@ return [
         'new_product' => 'Создать товар',
         'return_to_list' => 'Вернуться к списку товаров',
         'delete_confirm' => 'Вы действительно хотите удалить этот товар?',
+        // Import & Export
+        'import_product' => 'Импорт товаров',
+        'export_product' => 'Экспорт товаров',
         // Filters
         'filter_is_active' => 'Включены',
         // Scoreboard
@@ -29,6 +37,7 @@ return [
     ],
     'product' => [
         // Controls
+        'id' => 'Ид номер',
         'label' => 'Товар',
         'create' => 'Создать товар',
         'update' => 'Редактировать товар',
@@ -42,16 +51,22 @@ return [
         'sku' => 'SKU код',
         'isbn' => 'ISBN номер',
         'price' => 'Цена',
-        'description' => 'Полное описание товара',
+        'description' => 'Описание',
         'width' => 'Ширина',
         'height' => 'Высота',
         'depth' => 'Глубина',
         'weight' => 'Вес',
-        'categories' => 'Отображать в категориях',
+        'categories' => 'Категории',
+        'properties' => 'Свойства',
+        'publisher' => 'Издательсвто',
+        'publisher_empty' => '--- Выберите издательсвто ---',
+        'publisher_set' => 'Серия',
+        'publisher_set_empty' => '--- Выберите серию ---',
         'is_active' => 'Статус',
         'is_searchable' => 'Индексация',
         'is_unique_text' => 'Уникальное описание'
     ],
+
 
     // Categories
     'categories' => [
@@ -84,6 +99,7 @@ return [
         'is_searchable' => 'Индексация',
     ],
 
+
     // Publishers
     'publishers' => [
         'menu_label' => 'Издательства',
@@ -113,6 +129,7 @@ return [
         'is_active' => 'Статус',
         'is_searchable' => 'Индексация',
     ],
+
 
     // PublisherSets
     'publisher_sets' => [
@@ -148,6 +165,29 @@ return [
         'is_active' => 'Статус',
         'is_searchable' => 'Индексация',
     ],
+
+
+    // Product Properties
+    'product_properties' => [
+        'menu_label' => 'Свойства товара',
+        'menu_description' => 'Управление свойствами товара',
+        'new_product_property' => 'Создать свойство',
+        'list_title' => 'Управление свойствами товара',
+    ],
+
+    'product_property' => [
+        'label' => 'Свойство товара',
+        'create' => 'Создать свойство товара',
+        'creating' => 'Создание свойства товара',
+        'update' => 'Редактировать свойство товара',
+        'updating' => 'Редактирование свойства товара',
+        'preview' => 'Просмотр свойства товара',
+        'name' => 'Название',
+        'code' => 'Код',
+        'description' => 'Описание свойства',
+        'is_active' => 'Статус',
+    ],
+
 
     // Meta
     'meta' => [

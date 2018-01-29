@@ -11,10 +11,10 @@ columns:
 
     is_searchable:
         label: smartshop.catalog::lang.publisher.is_searchable
-        type: switch_colored
+        type: switch
         width: 1%
 
     is_active:
         label: smartshop.catalog::lang.publisher.is_active
-        type: switch_colored
+        type: switch
         width: 1%

@@ -1,0 +1,10 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    pivot[property_value]:
+        label: value
+        type: dropdown
+        emptyOption: djetson.shop::lang.form.dropdown_empty

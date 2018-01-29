@@ -67,6 +67,26 @@ class Plugin extends PluginBase
     }
 
     /**
+     * Register plugin settings
+     * @return array
+     */
+    public function registerSettings()
+    {
+        return [
+            'product_properties' => [
+                'label'       => 'smartshop.catalog::lang.product_properties.menu_label',
+                'description' => 'smartshop.catalog::lang.product_properties.menu_description',
+                'category'    => 'smartshop.catalog::lang.plugin.name',
+                'icon'        => 'icon-globe',
+                'url'         => Backend::url('smartshop/catalog/productproperties'),
+                'order'       => 500,
+                'permissions' => ['smartshop.catalog.access_product_properties'],
+                'keywords'    => 'product, properties',
+            ],
+        ];
+    }
+
+    /**
      * Register plugin permissions
      * @return array
      */
@@ -76,6 +96,10 @@ class Plugin extends PluginBase
             'smartshop.catalog.access_products' => [
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_products'
+            ],
+            'smartshop.catalog.access_import_export' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_import_export'
             ],
             'smartshop.catalog.access_categories' => [
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
@@ -88,6 +112,10 @@ class Plugin extends PluginBase
             'smartshop.catalog.access_publisher_sets' => [
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_publisher_sets'
+            ],
+            'smartshop.catalog.access_product_properties' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_product_properties'
             ]
         ];
     }

@@ -1,0 +1,9 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    format_delimiter_level_2:
+        label: IDs
+        type: text

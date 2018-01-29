@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    name:
+        label: Название
+        type: text
+
+    pivot[property_value][value]:
+        label: Значение
+        type: text
+        width: 30%
+        sortable: 0

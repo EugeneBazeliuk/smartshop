@@ -23,6 +23,9 @@ class CreateProductsTable extends Migration
             $table->double('height', 10, 2)->nullable();
             $table->double('depth', 10, 2)->nullable();
             $table->double('weight', 10, 2)->nullable();
+            // Relations
+            $table->integer('publisher_id')->unsigned()->nullable();
+            $table->integer('publisher_set_id')->unsigned()->nullable();
             // States
             $table->boolean('is_active')->default(0);
             $table->boolean('is_searchable')->default(0);

@@ -1,0 +1,42 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+export:
+    # Page title
+    title: smartshop.catalog::lang.products.export_product
+
+    # Output file name
+    fileName: products.csv
+
+    # Export List Column configuration
+    list: $/smartshop/catalog/models/productexport/columns.yaml
+
+    # Export Model class
+    modelClass: Smartshop\Catalog\Models\ProductExport
+
+    # Redirect when finished
+    redirect: smartshop/catalog/products
+
+    # Required permissions
+    permissions: smartshop.catalog.access_import_export
+
+
+import:
+    # Page title
+    title: smartshop.catalog::lang.products.import_product
+
+    # Import List Column configuration
+    list: $/smartshop/catalog/models/productimport/columns.yaml
+
+    # Import Form Field configuration
+    # form: $/smartshop/catalog/models/productimport/fields.yaml
+
+    # Import Model class
+    modelClass: Smartshop\Catalog\Models\ProductImport
+
+    # Redirect when finished
+    redirect: smartshop/catalog/products
+
+    # Required permissions
+    permissions: smartshop.catalog.access_import_export
