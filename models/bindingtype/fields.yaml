@@ -1,0 +1,32 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    name:
+        label: smartshop.catalog::lang.binding_type.name
+        type: text
+        span: left
+        required: 1
+
+    code:
+        label: smartshop.catalog::lang.binding_type.code
+        type: text
+        span: left
+        required: 1
+        preset:
+            field: name
+            type: slug
+
+    page:
+        label: smartshop.catalog::lang.binding_type.page
+        type: dropdown
+        span: left
+
+
+    description:
+        label: smartshop.catalog::lang.binding_type.description
+        type: textarea
+        size: small
+        span: left

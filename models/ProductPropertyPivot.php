@@ -6,8 +6,8 @@ use October\Rain\Database\Pivot;
  * ProductPropertyPivot Model
  *
  * @property \Smartshop\Catalog\Models\Product $product
- * @property \Smartshop\Catalog\Models\ProductProperty $property
- * @property \Smartshop\Catalog\Models\ProductPropertyValue $property_value
+ * @property \Smartshop\Catalog\Models\Property $property
+ * @property \Smartshop\Catalog\Models\PropertyValue $property_value
  *
  * @method \October\Rain\Database\Relations\BelongsTo product
  * @method \October\Rain\Database\Relations\BelongsTo property
@@ -40,10 +40,10 @@ class ProductPropertyPivot extends Pivot
             Product::class,
         ],
         'property' => [
-            ProductProperty::class,
+            Property::class,
         ],
         'property_value' => [
-            ProductPropertyValue::class
+            PropertyValue::class
         ],
     ];
 
@@ -56,12 +56,13 @@ class ProductPropertyPivot extends Pivot
 
     /**
      * Get PropertyValue Options
-     * @param $value string
-     * @param $data ProductProperty
-     * @return array
      */
     public function getPropertyValueOptions($value, $data)
     {
-        return $data->getValuesList();
+        if (!$data instanceof Property) {
+            return [];
+        }
+
+        return $data->getValuesOptions();
     }
 }

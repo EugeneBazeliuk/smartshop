@@ -72,6 +72,12 @@ tabs:
             type: relation
             span: left
 
+        # Tab - Bindings
+        bindings:
+            tab: Bindings
+            type: partial
+            path: relation_bindings
+
         # Tab - Properties
         properties:
             tab: Properties

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: smartshop.catalog::lang.property.label
+
+# Model Form Field configuration
+form: $/smartshop/catalog/models/property/fields.yaml
+
+# Model Class name
+modelClass: Smartshop\Catalog\Models\Property
+
+# Default redirect location
+defaultRedirect: smartshop/catalog/properties
+
+# Create page
+create:
+    title: smartshop.catalog::lang.property.create
+    redirect: smartshop/catalog/properties/update/:id
+    redirectClose: smartshop/catalog/properties
+
+# Update page
+update:
+    title: smartshop.catalog::lang.property.update
+    redirect: smartshop/catalog/properties
+    redirectClose: smartshop/catalog/properties
+
+# Preview page
+preview:
+    title: smartshop.catalog::lang.property.preview

@@ -13,9 +13,6 @@
         <testsuite name="SmartShop Unit Test Suite">
             <directory>./tests/unit</directory>
         </testsuite>
-        <testsuite name="SmartShop Functional Test Suite">
-            <directory>./tests/functional</directory>
-        </testsuite>
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>

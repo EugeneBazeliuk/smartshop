@@ -1,10 +1,17 @@
+bindings:
+    label: Связи
+    view:
+        toolbarButtons: add|remove
+        recordsPerPage: 10
+        list: $/smartshop/catalog/models/product/binding_columns.yaml
+
 properties:
     label: Свойства
     view:
         toolbarButtons: add|remove
         recordsPerPage: 10
-        list: $/smartshop/catalog/models/productpropertypivot/columns.yaml
+        list: $/smartshop/catalog/models/product/property_pivot_columns.yaml
     manage:
-        list: $/smartshop/catalog/models/productpropertypivot/columns.yaml
+        list: $/smartshop/catalog/models/product/property_columns.yaml
     pivot:
-        form: $/smartshop/catalog/models/productpropertypivot/fields.yaml
+        form: $/smartshop/catalog/models/product/property_fields.yaml

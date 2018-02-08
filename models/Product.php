@@ -5,6 +5,7 @@ use Model;
 /**
  * Product Model
  *
+ * @property \October\Rain\Database\Collection $bindings
  * @property \October\Rain\Database\Collection $categories
  * @property \October\Rain\Database\Collection $properties
  * @property \SmartShop\Catalog\Models\Publisher $publisher
@@ -14,6 +15,7 @@ use Model;
  *
  * @method \October\Rain\Database\Relations\BelongsTo publisher
  * @method \October\Rain\Database\Relations\BelongsTo publisher_set
+ * @method \October\Rain\Database\Relations\BelongsToMany bindings
  * @method \October\Rain\Database\Relations\BelongsToMany categories
  * @method \October\Rain\Database\Relations\BelongsToMany properties
  * @method \October\Rain\Database\Relations\MorphOne meta
@@ -79,17 +81,17 @@ class Product extends Model
      * @var array Relations BelongToMany
      */
     public $belongsToMany = [
+        'bindings' => [
+            Binding::class,
+            'table' => 'smartshop_product_binding'
+        ],
         'categories' => [
             Category::class,
-            'table' => 'smartshop_category_product',
-            'key' => 'product_id',
-            'otherKey' => 'category_id',
+            'table' => 'smartshop_product_category',
         ],
         'properties' => [
-            ProductProperty::class,
+            Property::class,
             'table' => 'smartshop_product_property',
-            'key'      => 'product_id',
-            'otherKey' => 'property_id',
             'pivot'    => ['property_value_id'],
             'pivotModel' => ProductPropertyPivot::class
         ]

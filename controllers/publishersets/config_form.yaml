@@ -16,10 +16,16 @@ defaultRedirect: smartshop/catalog/publishersets
 
 # Create page
 create:
+    title: smartshop.catalog::lang.publisher_set.create
     redirect: smartshop/catalog/publishersets/update/:id
     redirectClose: smartshop/catalog/publishersets
 
 # Update page
 update:
+    title: smartshop.catalog::lang.publisher_set.update
     redirect: smartshop/catalog/publishersets
     redirectClose: smartshop/catalog/publishersets
+
+# Preview page
+preview:
+    title: smartshop.catalog::lang.publisher_set.preview

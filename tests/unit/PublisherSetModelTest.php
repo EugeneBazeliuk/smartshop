@@ -32,6 +32,9 @@ class PublisherSetModelTest extends PluginTestCase
         $model->meta = new Meta();
         $model->meta->fill(MetaModelTest::$meta);
 
+        // Create Product Relation
+        $model->products()->create(ProductModelTest::$product);
+
         // Create Publisher Relation
         $model->publisher = Publisher::create(PublisherModelTest::$publisher);
 

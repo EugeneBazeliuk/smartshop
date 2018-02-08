@@ -59,11 +59,11 @@ class Category extends Model
     public $belongsToMany = [
         'products' => [
             Product::class,
-            'table' => 'smartshop_category_product'
+            'table' => 'smartshop_product_category'
         ],
         'products_count' => [
             Product::class,
-            'table' => 'smartshop_category_product',
+            'table' => 'smartshop_product_category',
             'count' => true
         ]
     ];

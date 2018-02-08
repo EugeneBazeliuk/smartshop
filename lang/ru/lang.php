@@ -13,7 +13,9 @@ return [
         'access_categories' => 'Управление категориями',
         'access_publishers' => 'Управление издательствами',
         'access_publisher_sets' => 'Управление сериями издательств',
-        'access_product_properties' => 'Управление свойствами товара',
+        'access_bindings' => 'Управление связями',
+        'access_binding_types' => 'Управление типами связей',
+        'access_properties' => 'Управление свойствами товара',
         'access_settings' => 'Управление настройками каталога',
     ],
 
@@ -135,9 +137,8 @@ return [
     'publisher_sets' => [
         'menu_label' => 'Серии',
         'list_title' => 'Управление сериями',
-        'new_set' => 'Создать серию',
+        'new_publisher_set' => 'Создать серию',
         'return_to_list' => 'Вернуться к списку серий',
-        'delete_confirm' => 'Вы действительно хотите удалить эту серию?',
         // Filters
         'filter_is_active' => 'Включены',
         'filter_by_publisher' => 'Издательство',
@@ -149,13 +150,12 @@ return [
 
     'publisher_set' => [
         // Controls
-        'label' => 'серии',
-        'create' => 'Создать серию',
-        'update' => 'Редактировать серию',
+        'label' => 'Серии',
+        'create' => 'Создание серии',
+        'update' => 'Редактирование серии',
         'preview' => 'Просмотр серии',
-        'creating' => 'Создание серии',
-        'saving' => 'Сохранение серии',
-        'deleting' => 'Удаление серии',
+        'delete' => 'Удаление серии',
+        'delete_confirm' => 'Вы действительно хотите удалить эту серию?',
         // Fields
         'name' => 'Название',
         'slug' => 'Параметр URL',
@@ -167,25 +167,77 @@ return [
     ],
 
 
+    // Bindings
+    'bindings' => [
+        'menu_label' => 'Связи',
+        'list_title' => 'Управление связями',
+        'new_binding' => 'Создать связь',
+        'return_to_list' => 'Вернуться к списку связей',
+        // Scoreboard
+        'count_is_active' => 'Связей активно',
+        'count_is_disabled' => 'Связей отключено',
+        'count_is_deleted' => 'Связей удалено'
+    ],
+
+    'binding' => [
+        // Controls
+        'label' => 'Связи',
+        'create' => 'Создание связи',
+        'update' => 'Редактирование связи',
+        'preview' => 'Просмотр связи',
+        'delete' => 'Удаление связи',
+        'delete_confirm' => 'Вы действительно хотите удалить эту связь?',
+        // Fields
+        'name' => 'Название',
+        'slug' => 'Параметр URL',
+        'description' => 'Описание',
+        'is_active' => 'Статус',
+        'is_searchable' => 'Индексация',
+    ],
+
+    // Binding Types
+    'binding_types' => [
+        'menu_label' => 'Типы связи',
+        'menu_description' => 'Управление типами связей товара',
+        'list_title' => 'Управление типами связи',
+        'new_binding' => 'Создать тип связи',
+        'return_to_list' => 'Вернуться к списку типов связи',
+    ],
+
+    'binding_type' => [
+        // Fields
+        'name' => 'Название',
+        'code' => 'Код',
+        'page' => 'Страница связи',
+        'description' => 'Описание типа связи',
+    ],
+
+
     // Product Properties
-    'product_properties' => [
+    'properties' => [
         'menu_label' => 'Свойства товара',
         'menu_description' => 'Управление свойствами товара',
-        'new_product_property' => 'Создать свойство',
+        'new_property' => 'Создать свойство',
         'list_title' => 'Управление свойствами товара',
     ],
 
-    'product_property' => [
-        'label' => 'Свойство товара',
-        'create' => 'Создать свойство товара',
-        'creating' => 'Создание свойства товара',
-        'update' => 'Редактировать свойство товара',
-        'updating' => 'Редактирование свойства товара',
-        'preview' => 'Просмотр свойства товара',
+    'property' => [
+        'label' => 'Свойства',
+        'create' => 'Создание свойства',
+        'update' => 'Редактирование свойства',
+        'preview' => 'Просмотр свойства',
+        'delete' => 'Удаление свойства',
+        'delete_confirm' => 'Вы действительно хотите удалить это свойство?',
+        // Fields
         'name' => 'Название',
         'code' => 'Код',
         'description' => 'Описание свойства',
         'is_active' => 'Статус',
+    ],
+
+    'property_value' => [
+        'label' => 'Значение свойства',
+        'value' => 'Значение'
     ],
 
 

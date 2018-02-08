@@ -6,10 +6,12 @@ use Model;
  * PublisherSet Model
  *
  * @property \Smartshop\Catalog\Models\Publisher $publisher
+ * @property \October\Rain\Database\Collection $products
  * @property \Smartshop\Catalog\Models\Meta $meta
  * @property \System\Models\File $image
  *
  * @method \October\Rain\Database\Relations\BelongsTo publisher
+ * @method \October\Rain\Database\Relations\hasMany products
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
  */
@@ -70,6 +72,15 @@ class PublisherSet extends Model
      */
     public $belongsTo = [
         'publisher' => [Publisher::class],
+    ];
+
+    /**
+     * @var array Relations HasMany
+     */
+    public $hasMany = [
+        'products' => [
+            Product::class
+        ],
     ];
 
     /**

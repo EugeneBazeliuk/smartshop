@@ -1,0 +1,10 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    value:
+        label: smartshop.catalog::lang.property_value.value
+        type: text
+        required: 1

@@ -1,0 +1,14 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    name:
+        label: smartshop.catalog::lang.binding_type.name
+        type: text
+
+    code:
+        label: smartshop.catalog::lang.binding_type.code
+        type: text
+        width: 20%

@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    name:
+        label: smartshop.catalog::lang.property.name
+        type: text
+
+    pivot[property_value][value]:
+        label: smartshop.catalog::lang.property_value.value
+        type: text
+        width: 30%
+        sortable: 0

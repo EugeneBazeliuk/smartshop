@@ -60,6 +60,12 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-book',
                         'url'         => Backend::url('smartshop/catalog/publishersets'),
                         'permissions' => ['smartshop.catalog.access_publisher_sets'],
+                    ],
+                    'bindings' => [
+                        'label'       => 'smartshop.catalog::lang.bindings.menu_label',
+                        'icon'        => 'icon-book',
+                        'url'         => Backend::url('smartshop/catalog/bindings'),
+                        'permissions' => ['smartshop.catalog.access_bindings'],
                     ]
                 ]
             ]
@@ -73,15 +79,25 @@ class Plugin extends PluginBase
     public function registerSettings()
     {
         return [
-            'product_properties' => [
-                'label'       => 'smartshop.catalog::lang.product_properties.menu_label',
-                'description' => 'smartshop.catalog::lang.product_properties.menu_description',
+            'properties' => [
+                'label'       => 'smartshop.catalog::lang.properties.menu_label',
+                'description' => 'smartshop.catalog::lang.properties.menu_description',
                 'category'    => 'smartshop.catalog::lang.plugin.name',
                 'icon'        => 'icon-globe',
-                'url'         => Backend::url('smartshop/catalog/productproperties'),
+                'url'         => Backend::url('smartshop/catalog/properties'),
                 'order'       => 500,
-                'permissions' => ['smartshop.catalog.access_product_properties'],
-                'keywords'    => 'product, properties',
+                'permissions' => ['smartshop.catalog.access_properties'],
+                'keywords'    => 'product, property',
+            ],
+            'bindingtypes' => [
+                'label'       => 'smartshop.catalog::lang.binding_types.menu_label',
+                'description' => 'smartshop.catalog::lang.binding_types.menu_description',
+                'category'    => 'smartshop.catalog::lang.plugin.name',
+                'icon'        => 'icon-globe',
+                'url'         => Backend::url('smartshop/catalog/bindingtypes'),
+                'order'       => 500,
+                'permissions' => ['smartshop.catalog.access_binding_types'],
+                'keywords'    => 'binding, binding type',
             ],
         ];
     }
@@ -113,10 +129,18 @@ class Plugin extends PluginBase
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_publisher_sets'
             ],
+            'smartshop.catalog.access_bindings' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_bindings'
+            ],
+            'smartshop.catalog.access_binding_types' => [
+                'tab'   => 'smartshop.catalog::lang.plugin.tab',
+                'label' => 'smartshop.catalog::lang.plugin.access_binding_types'
+            ],
             'smartshop.catalog.access_product_properties' => [
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_product_properties'
-            ]
+            ],
         ];
     }
 }

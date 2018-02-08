@@ -34,6 +34,9 @@ class PublisherModelTest extends PluginTestCase
         // Save Model
         $model->save();
 
+        // Create Product Relation
+        $model->products()->create(ProductModelTest::$product);
+
         // Create PublisherSet Relation
         $model->sets()->create(PublisherSetModelTest::$publisherSet);
 
@@ -50,6 +53,10 @@ class PublisherModelTest extends PluginTestCase
             $this->assertEquals($val, $model->meta->{$key});
         }
 
+        // Assert HasMany Sets
         $this->assertEquals(1, $model->sets()->count());
+
+        // Assert HasMany Products
+        $this->assertEquals(1, $model->products()->count());
     }
 }

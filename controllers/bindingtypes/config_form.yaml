@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Binding Type
+
+# Model Form Field configuration
+form: $/smartshop/catalog/models/bindingtype/fields.yaml
+
+# Model Class name
+modelClass: Smartshop\Catalog\Models\BindingType
+
+# Default redirect location
+defaultRedirect: smartshop/catalog/bindingtypes
+
+# Create page
+create:
+    title: Create Binding Type
+    redirect: smartshop/catalog/bindingtypes/update/:id
+    redirectClose: smartshop/catalog/bindingtypes
+
+# Update page
+update:
+    title: Edit Binding Type
+    redirect: smartshop/catalog/bindingtypes
+    redirectClose: smartshop/catalog/bindingtypes
+
+# Preview page
+preview:
+    title: Preview Binding Type

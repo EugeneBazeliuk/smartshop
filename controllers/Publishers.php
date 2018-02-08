@@ -107,16 +107,4 @@ class Publishers extends Controller
     {
         $query->withTrashed();
     }
-
-
-
-//    /**
-//     * @param $config
-//     * @param $field
-//     * @param \Smartshop\Catalog\Models\PublisherSet $model
-//     */
-//    public function relationExtendConfig($config, $field, $model)
-//    {
-//        $model->withTrashed();
-//    }
 }

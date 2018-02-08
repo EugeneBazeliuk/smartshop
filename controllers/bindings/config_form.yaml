@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: smartshop.catalog::lang.category.label
+
+# Model Form Field configuration
+form: $/smartshop/catalog/models/binding/fields.yaml
+
+# Model Class name
+modelClass: Smartshop\Catalog\Models\Binding
+
+# Default redirect location
+defaultRedirect: smartshop/catalog/bindings
+
+# Create page
+create:
+    title: smartshop.catalog::lang.binding.create
+    redirect: smartshop/catalog/bindings/update/:id
+    redirectClose: smartshop/catalog/bindings
+
+# Update page
+update:
+    title: smartshop.catalog::lang.binding.update
+    redirect: smartshop/catalog/bindings
+    redirectClose: smartshop/catalog/bindings
+
+# Preview page
+preview:
+    title: smartshop.catalog::lang.binding.preview

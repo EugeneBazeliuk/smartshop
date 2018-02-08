@@ -6,9 +6,11 @@ use Model;
  * Publisher Model
  *
  * @property \October\Rain\Database\Collection $sets
+ * @property \October\Rain\Database\Collection $products
  * @property \System\Models\File $image
  *
  * @method \October\Rain\Database\Relations\hasMany sets
+ * @method \October\Rain\Database\Relations\hasMany products
  * @method \October\Rain\Database\Relations\AttachOne image
  */
 class Publisher extends Model
@@ -56,7 +58,10 @@ class Publisher extends Model
     public $hasMany = [
         'sets' => [
             PublisherSet::class
-        ]
+        ],
+        'products' => [
+            Product::class
+        ],
     ];
 
     /**
@@ -109,7 +114,7 @@ class Publisher extends Model
     }
 
     /**
-     *
+     * Get Name list for dropdown options
      */
     public static function getNameList()
     {

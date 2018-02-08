@@ -1,25 +1,25 @@
 <?php namespace SmartShop\Tests\Unit;
 
 use PluginTestCase;
-use SmartShop\Catalog\Models\ProductPropertyValue;
+use SmartShop\Catalog\Models\PropertyValue;
 
 /**
  * Class MetaModelTest
  */
 class ProductPropertyValueModelTest extends PluginTestCase
 {
-    public static $productPropertyValue = [
+    public static $propertyValue = [
         // Base
         'value' => 'Test value',
     ];
 
     public function test_create_product_property_value()
     {
-        ProductPropertyValue::truncate();
+        PropertyValue::truncate();
 
         // Create model
-        $model = new ProductPropertyValue;
-        $model->fill(self::$productPropertyValue);
+        $model = new PropertyValue;
+        $model->fill(self::$propertyValue);
 
         // Save Model
         $model->save();
@@ -28,7 +28,7 @@ class ProductPropertyValueModelTest extends PluginTestCase
         $this->assertEquals(1, $model->id);
 
         // Assert model attributes
-        foreach (self::$productPropertyValue as $key => $val) {
+        foreach (self::$propertyValue as $key => $val) {
             $this->assertEquals($val, $model->{$key});
         }
     }

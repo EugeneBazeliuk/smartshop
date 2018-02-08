@@ -12,7 +12,7 @@ class CreateProductPropertiesTable extends Migration
             $table->engine = 'InnoDB';
             // Base
             $table->increments('id');
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('code')->unique();
             $table->text('description')->nullable();
             // Sortable
@@ -25,7 +25,7 @@ class CreateProductPropertiesTable extends Migration
             $table->engine = 'InnoDB';
             // Base
             $table->increments('id');
-            $table->string('value');
+            $table->string('name');
             $table->integer('product_property_id')->unsigned()->nullable();
         });
 

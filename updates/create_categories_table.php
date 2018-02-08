@@ -28,17 +28,17 @@ class CreateCategoriesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('smartshop_category_product', function(Blueprint $table) {
+        Schema::create('smartshop_product_category', function(Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('category_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->primary(['category_id', 'product_id']);
+            $table->integer('category_id')->unsigned();
+            $table->primary(['product_id', 'category_id']);
         });
     }
 
     public function down()
     {
         Schema::dropIfExists('smartshop_categories');
-        Schema::dropIfExists('smartshop_category_product');
+        Schema::dropIfExists('smartshop_product_category');
     }
 }

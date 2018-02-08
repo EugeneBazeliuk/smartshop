@@ -1,0 +1,19 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    name:
+        label: smartshop.catalog::lang.property.name
+        type: text
+
+    code:
+        label: smartshop.catalog::lang.property.code
+        type: text
+        width: 20%
+
+    is_active:
+        label: smartshop.catalog::lang.property.is_active
+        type: switch
+        width: 1%

@@ -1,0 +1,10 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    value:
+        label: smartshop.catalog::lang.property_value.value
+        type: text
+        searchable: 1
