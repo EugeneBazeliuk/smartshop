@@ -20,6 +20,8 @@ use Model;
  * @method \October\Rain\Database\Relations\BelongsToMany properties
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
+ *
+ * @mixin \Eloquent
  */
 class Product extends Model
 {

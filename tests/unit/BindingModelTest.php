@@ -20,7 +20,7 @@ class BindingModelTest extends PluginTestCase
         'is_searchable' => true,
     ];
 
-    public function test_create_category()
+    public function test_create_binding()
     {
         Binding::truncate();
 

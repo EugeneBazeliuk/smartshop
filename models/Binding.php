@@ -14,6 +14,8 @@ use Model;
  * @method \October\Rain\Database\Relations\BelongsToMany products
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
+ *
+ * @mixin \Eloquent
  */
 class Binding extends Model
 {
@@ -39,6 +41,8 @@ class Binding extends Model
         'name',
         'slug',
         'description',
+        // Relations
+        'binding_type',
         // States
         'is_active',
         'is_searchable',

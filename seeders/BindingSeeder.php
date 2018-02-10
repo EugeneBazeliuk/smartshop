@@ -1,29 +1,31 @@
 <?php namespace SmartShop\Catalog\Seeders;
 
 use Smartshop\Catalog\Models\Binding;
+use SmartShop\Catalog\Models\BindingType;
 
 class BindingSeeder extends \October\Rain\Database\Updates\Seeder
 {
+    protected $bindings = [
+        // Base
+        'name' => 'First Binding',
+        'slug' => 'first-binding-slug',
+        'description' => '<b>Test Description</b>',
+        // States
+        'is_active' => true,
+        'is_searchable' => true,
+    ];
+
+    protected $bindingType = [
+        // Base
+        'name' => 'First Binding Type',
+        'code' => 'first-binding-type',
+        'page' => 'test/page'
+    ];
+
     public function run()
     {
-        $binding1 = Binding::create([
-            // Base
-            'name' => 'First Binding',
-            'slug' => 'first-binding-slug',
-            'description' => '<b>Test Description</b>',
-            // States
-            'is_active' => true,
-            'is_searchable' => true,
-        ]);
-
-        $binding2 = Binding::create([
-            // Base
-            'name' => 'Second Binding',
-            'slug' => 'second-binding-slug',
-            'description' => '<b>Test Description</b>',
-            // States
-            'is_active' => true,
-            'is_searchable' => true,
-        ]);
+        $binding = Binding::make($this->bindings);
+        $binding->binding_type = BindingType::create($this->bindingType);
+        $binding->save();
     }
 }

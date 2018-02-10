@@ -10,6 +10,8 @@ use Model;
  * @method \October\Rain\Database\Relations\BelongsTo property
  *
  * @todo Обратное удаление для ProductToBinding
+ *
+ * @mixin \Eloquent
  */
 class PropertyValue extends Model
 {

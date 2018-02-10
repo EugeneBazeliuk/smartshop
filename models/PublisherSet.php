@@ -14,6 +14,8 @@ use Model;
  * @method \October\Rain\Database\Relations\hasMany products
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
+ *
+ * @mixin \Eloquent
  */
 class PublisherSet extends Model
 {

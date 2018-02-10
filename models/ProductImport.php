@@ -1,13 +1,20 @@
 <?php namespace Smartshop\Catalog\Models;
 
 use Exception;
+use ApplicationException;
 use Backend\Models\ImportModel;
 
 /**
  * ProductImport Model
+ *
+ * @todo add Binding Import
+ * @todo add BindingType Import
+ * @todo add Property import
  */
 class ProductImport extends ImportModel
 {
+    const TWO_LEVEL_DELIMETER = '::';
+
     /**
      * @var string The database table used by the model.
      */
@@ -20,6 +27,8 @@ class ProductImport extends ImportModel
         'title' => 'required',
         'sku' => 'required',
     ];
+
+    protected $bindingNameCache = [];
 
     protected $categoryNameCache = [];
 
@@ -57,10 +66,11 @@ class ProductImport extends ImportModel
 
                 $exceptAttributes = [
                     'id',
-                    'publisher',
-                    'publisher_set',
+                    'bindings',
                     'categories',
                     'properties',
+                    'publisher',
+                    'publisher_set',
                 ];
 
                 foreach (array_except($data, $exceptAttributes) as $attribute => $value) {
@@ -75,6 +85,9 @@ class ProductImport extends ImportModel
 
                 // Sync categories
                 $product->categories()->sync($this->getCategoriesIds($data));
+
+                // Sync bindings
+                $product->bindings()->sync($this->getBindingsIds($data));
 
                 // Sync properties
                 // $product->properties()->sync($this->getPropertiesIds($data));
@@ -159,6 +172,56 @@ class ProductImport extends ImportModel
     }
 
     /**
+     * Get Bindings id's
+     * @param $data
+     * @return array
+     */
+    private function getBindingsIds($data)
+    {
+        $ids = [];
+        $bindings = $this->decodeArrayValue(array_get($data, 'bindings'));
+
+        foreach ($bindings as $encodedBinding)
+        {
+            $result = $this->decodeTwoLevelArrayValue($encodedBinding);
+
+            $bindingType = $result['code'];
+            $bindingName = $result['value'];
+
+            if (isset($this->bindingNameCache[$bindingType][$bindingName])) {
+                $ids[] = $this->bindingNameCache[$bindingType][$bindingName];
+            } else {
+                $model = Binding::firstOrCreate([
+                    'name' => $bindingName,
+                    'binding_type' => $this->getBindingTypeIdByCode($bindingType)
+                ]);
+                $ids[] = $this->bindingNameCache[$bindingType][$bindingName] = $model->id;
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     *
+     */
+    private function getBindingTypeIdByCode($code)
+    {
+        if ($bindingType = BindingType::whereCode($code)->first()) {
+            return $bindingType->id;
+        }
+
+        $model = BindingType::create([
+            'name' => $code,
+            'code' => $code,
+        ]);
+
+        return $model->id;
+    }
+
+
+
+    /**
      * Get Categories id's
      * @param $data
      * @return array
@@ -179,6 +242,38 @@ class ProductImport extends ImportModel
 
         return $ids;
     }
+
+    /**
+     * Decode Two Level Array Value
+     * @param $string
+     * @return array
+     * @throws \ApplicationException
+     */
+    private function decodeTwoLevelArrayValue($string)
+    {
+        $data = $this->decodeArrayValue($string, self::TWO_LEVEL_DELIMETER);
+
+        if (is_array($data) && isset($data[0], $data[1])) {
+            return ['code' => $data[0], 'value' => $data[1]];
+        }
+
+        throw new ApplicationException('Wrong format');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    /**
 //     * Get Properties Ids

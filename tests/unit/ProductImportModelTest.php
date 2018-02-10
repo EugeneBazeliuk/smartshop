@@ -10,7 +10,7 @@ use Smartshop\Catalog\Models\ProductImport;
 class ProductImportModelTest extends PluginTestCase
 {
     public static $importData = [
-        'title' => 'Test Product',
+        'title' => 'Product name',
         'sku' => '123456',
         'isbn' => '12345678',
         'price' => 100.00,
@@ -21,10 +21,11 @@ class ProductImportModelTest extends PluginTestCase
         'depth' => 12.13,
         'weight' => 13.14,
         // Relations
-        'categories' => 'Test category 1|Test category 2',
-        'properties' => 'property::Test value',
-        'publisher' => 'Test Publisher',
-        'publisher_set' => 'Test Publisher Set',
+        'bindings' => 'binding_type_1::binding_name_1',
+        'categories' => 'category_1|category_2',
+        'properties' => 'property::value',
+        'publisher' => 'publisher_name',
+        'publisher_set' => 'publisher_set_name',
         // States
         'is_active' => true,
         'is_searchable' => true,
@@ -64,13 +65,20 @@ class ProductImportModelTest extends PluginTestCase
         $this->assertEquals(self::$importData['is_searchable'], $model->is_searchable);
         $this->assertEquals(self::$importData['is_unique_text'], $model->is_unique_text);
 
-        // Assert Publisher model
-        $this->assertEquals(self::$importData['publisher'], $model->publisher->name);
+        // Assert Binding
+        $this->assertDatabaseHas('smartshop_bindings', ['name' => 'binding_name_1']);
 
-        // Assert PublisherSet model
-        $this->assertEquals(self::$importData['publisher_set'], $model->publisher_set->name);
 
-        // Assert Categories Relation
-        $this->assertEquals(2, $model->categories()->count());
+//        // Assert Binding Relation
+//        $this->assertEquals(1, $model->bindings()->count());
+//
+//        // Assert Categories Relation
+//        $this->assertEquals(2, $model->categories()->count());
+//
+//        // Assert Publisher model
+//        $this->assertEquals(self::$importData['publisher'], $model->publisher->name);
+//
+//        // Assert PublisherSet model
+//        $this->assertEquals(self::$importData['publisher_set'], $model->publisher_set->name);
     }
 }

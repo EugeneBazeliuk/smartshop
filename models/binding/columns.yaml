@@ -9,6 +9,12 @@ columns:
         type: text
         searchable: 1
 
+    binding_type:
+        label: smartshop.catalog::lang.binding.binding_type
+        relation: binding_type
+        select: name
+        width: 20%
+
     is_searchable:
         label: smartshop.catalog::lang.binding.is_searchable
         type: switch

@@ -4,6 +4,8 @@ use Model;
 
 /**
  * Meta Model
+ *
+ * @mixin \Eloquent
  */
 class Meta extends Model
 {

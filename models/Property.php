@@ -10,6 +10,8 @@ use Model;
  *
  * @method \October\Rain\Database\Relations\HasMany values
  * @method \October\Rain\Database\Relations\BelongsToMany products
+ *
+ * @mixin \Eloquent
  */
 class Property extends Model
 {

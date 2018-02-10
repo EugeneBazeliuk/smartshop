@@ -20,10 +20,10 @@ fields:
             type: slug
 
     binding_type:
-        label: smartshop.catalog::lang.product.binding_type
+        label: smartshop.catalog::lang.binding.binding_type
         type: dropdown
         span: auto
-        emptyOption: smartshop.catalog::lang.product.binding_type_empty
+        emptyOption: smartshop.catalog::lang.binding.binding_type_empty
 
 tabs:
     fields:

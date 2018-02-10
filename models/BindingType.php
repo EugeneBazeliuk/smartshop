@@ -9,6 +9,8 @@ use Cms\Classes\Page;
  * @property \October\Rain\Database\Collection bindings
  *
  * @method \October\Rain\Database\Relations\HasMany bindings
+ *
+ * @mixin \Eloquent
  */
 class BindingType extends Model
 {
@@ -59,7 +61,7 @@ class BindingType extends Model
             'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i',
             'unique:smartshop_binding_types'
         ],
-        'page' => 'required|max:255',
+        'page' => 'max:255',
         'description' => '',
     ];
 
@@ -69,7 +71,7 @@ class BindingType extends Model
     public function getPageOptions()
     {
         return Page::sortBy('baseFileName')
-            ->lists('title', 'baseFileName');
+            ->pluck('title', 'baseFileName');
     }
 
     //
@@ -78,6 +80,6 @@ class BindingType extends Model
 
     public static function getNameList()
     {
-        return self::lists('name', 'id');
+        return self::pluck('name', 'id');
     }
 }

@@ -12,6 +12,8 @@ use Model;
  * @method \October\Rain\Database\Relations\hasMany sets
  * @method \October\Rain\Database\Relations\hasMany products
  * @method \October\Rain\Database\Relations\AttachOne image
+ *
+ * @mixin \Eloquent
  */
 class Publisher extends Model
 {

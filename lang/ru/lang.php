@@ -19,7 +19,6 @@ return [
         'access_settings' => 'Управление настройками каталога',
     ],
 
-
     // Products
     'products' => [
         'menu_label' => 'Товары',
@@ -37,6 +36,7 @@ return [
         'count_is_disabled' => 'Товаров отключено',
         'count_is_deleted' => 'Товаров удалено'
     ],
+
     'product' => [
         // Controls
         'id' => 'Ид номер',
@@ -83,6 +83,7 @@ return [
         'count_is_disabled' => 'Категорий отключено',
         'count_is_deleted' => 'Категорий удалено'
     ],
+
     'category' => [
         // Controls
         'label' => 'Категория',
@@ -114,6 +115,7 @@ return [
         'count_is_disabled' => 'Издательств отключено',
         'count_is_deleted' => 'Издательств удалено'
     ],
+
     'publisher' => [
         // Controls
         'label' => 'Издательства',
@@ -191,6 +193,8 @@ return [
         'name' => 'Название',
         'slug' => 'Параметр URL',
         'description' => 'Описание',
+        'binding_type' => 'Тип связи',
+        'binding_type_empty' => '--- Выберите тип связи ---',
         'is_active' => 'Статус',
         'is_searchable' => 'Индексация',
     ],

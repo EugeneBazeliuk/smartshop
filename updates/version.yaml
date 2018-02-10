@@ -7,4 +7,5 @@
     - create_publisher_sets_table.php
     - create_bindings_table.php
     - create_meta_table.php
+    - create_import_templates_table
     - seed_init.php
