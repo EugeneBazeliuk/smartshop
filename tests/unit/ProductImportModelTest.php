@@ -66,7 +66,7 @@ class ProductImportModelTest extends PluginTestCase
         $this->assertEquals(self::$importData['is_unique_text'], $model->is_unique_text);
 
         // Assert Binding
-        $this->assertDatabaseHas('smartshop_bindings', ['name' => 'binding_name_1']);
+        // $this->assertDatabaseHas('smartshop_bindings', ['name' => 'binding_name_1']);
 
 
 //        // Assert Binding Relation

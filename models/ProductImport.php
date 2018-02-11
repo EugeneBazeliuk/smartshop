@@ -245,9 +245,9 @@ class ProductImport extends ImportModel
 
     /**
      * Decode Two Level Array Value
-     * @param $string
-     * @return array
-     * @throws \ApplicationException
+     *
+     * @param string $string
+     * @return array|bool
      */
     private function decodeTwoLevelArrayValue($string)
     {
@@ -257,7 +257,7 @@ class ProductImport extends ImportModel
             return ['code' => $data[0], 'value' => $data[1]];
         }
 
-        throw new ApplicationException('Wrong format');
+        return false;
     }
 
 

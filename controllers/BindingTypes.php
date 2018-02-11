@@ -38,6 +38,6 @@ class BindingTypes extends Controller
         parent::__construct();
 
         BackendMenu::setContext('October.System', 'system', 'settings');
-        SettingsManager::setContext('Smartshop.Catalog', 'bindingtypes');
+        SettingsManager::setContext('Smartshop.Catalog', 'binding_types');
     }
 }
