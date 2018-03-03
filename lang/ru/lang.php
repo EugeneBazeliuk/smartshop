@@ -16,6 +16,7 @@ return [
         'access_bindings' => 'Управление связями',
         'access_binding_types' => 'Управление типами связей',
         'access_properties' => 'Управление свойствами товара',
+        'access_import_templates' => 'Управление шаблонами импорта',
         'access_settings' => 'Управление настройками каталога',
     ],
 
@@ -242,6 +243,49 @@ return [
     'property_value' => [
         'label' => 'Значение свойства',
         'value' => 'Значение'
+    ],
+
+
+    // Import Template
+    'import_templates' => [
+        'menu_label' => 'Шаблоны импорта',
+        'menu_description' => 'Управление шаблонами импорта каталога',
+        'list_title' => 'Управление шаблонами импорта',
+        'return_to_list' => 'Вернуться к списку шаблонов',
+        'new_import_template' => 'Создать шаблон импорта',
+    ],
+
+    'import_template' => [
+        'label' => 'Шаблон импорта',
+        'create_title' => 'Создание шаблона импорта',
+        'update_title' => 'Редактирование шаблона импорта',
+        'preview_title' => 'Предпросмотр шаблона импорта',
+        'delete_title' => 'Удаление шаблона импорта',
+        // Fields
+        'name' => 'Название шаблона',
+        'description' => 'Описание шаблона',
+        'file' => 'Файл импорта',
+        'mapping' => 'Таблица соответствия',
+        'mapping_file_column' => 'Столбцы файла',
+        'mapping_file_value' => 'Значения столбцов файла',
+        'mapping_db_column' => 'Поля базы данных',
+        'mapping_name' => 'Название товара',
+        'mapping_slug' => 'URL параметр товара',
+        'mapping_sku' => 'SKU код товара',
+        'mapping_isbn' => 'ISBN номер товара',
+        'mapping_price' => 'Цена товара',
+        'mapping_width' => '',
+        'mapping_height' => '',
+        'mapping_depth' => '',
+        'mapping_weight' => '',
+        'mapping_is_active' => '',
+        'mapping_is_searchable' => '',
+        'mapping_is_unique_text' => '',
+        'mapping_bindings' => '',
+        'mapping_categories' => '',
+        'mapping_properties' => '',
+        'mapping_publisher' => '',
+        'mapping_publisher_set' => '',
     ],
 
 
