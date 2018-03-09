@@ -1,6 +1,8 @@
 <?php namespace Smartshop\Catalog\Models;
 
+use Event;
 use Exception;
+use BackendAuth;
 use ApplicationException;
 use Backend\Models\ImportModel;
 
@@ -27,6 +29,8 @@ class ProductImport extends ImportModel
         'title' => 'required',
         'sku' => 'required',
     ];
+
+    protected $template;
 
     protected $bindingNameCache = [];
 
@@ -105,6 +109,13 @@ class ProductImport extends ImportModel
                 $this->logError($row, $ex->getMessage());
             }
         }
+
+        Event::fire('smartshop.catalog.importRun', [
+            $this->getResultStats(),
+            $this->getImportFilePath($sessionKey),
+            BackendAuth::getUser(),
+            $this->template,
+        ]);
     }
 
     /**
