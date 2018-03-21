@@ -9,6 +9,11 @@ use Backend\Models\ImportModel;
 /**
  * ProductImport Model
  *
+ * @property \System\Models\File $import_file
+ *
+ * @method \October\Rain\Database\Relations\AttachOne import_file
+ *
+ *
  * @todo add Binding Import
  * @todo add BindingType Import
  * @todo add Property import
@@ -29,6 +34,8 @@ class ProductImport extends ImportModel
         'title' => 'required',
         'sku' => 'required',
     ];
+
+    protected $author;
 
     protected $template;
 
@@ -91,7 +98,7 @@ class ProductImport extends ImportModel
                 $product->categories()->sync($this->getCategoriesIds($data));
 
                 // Sync bindings
-                $product->bindings()->sync($this->getBindingsIds($data));
+                // $product->bindings()->sync($this->getBindingsIds($data));
 
                 // Sync properties
                 // $product->properties()->sync($this->getPropertiesIds($data));
@@ -113,11 +120,39 @@ class ProductImport extends ImportModel
         Event::fire('smartshop.catalog.importRun', [
             $this->getResultStats(),
             $this->getImportFilePath($sessionKey),
-            BackendAuth::getUser(),
-            $this->template,
+            $this->getImportAuthorId(),
+            $this->getImportTemplateId(),
         ]);
     }
 
+    public function setImportTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * Get import Template
+     *
+     * @return int|null
+     */
+    private function getImportTemplateId()
+    {
+        return $this->template ? $this->template->id : null;
+    }
+
+    /**
+     * Get import Author
+     *
+     * @return int|null
+     */
+    private function getImportAuthorId()
+    {
+        if (!$author = $this->author) {
+            $author = BackendAuth::getUser();
+        }
+
+        return $author ? $author->id : null;
+    }
 
 
 

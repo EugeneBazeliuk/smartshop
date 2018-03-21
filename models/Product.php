@@ -71,6 +71,18 @@ class Product extends Model
      */
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        // Sizes
+        'width' => 'float',
+        'height' => 'float',
+        'depth' => 'float',
+        'weight' => 'float',
+        // States
+        'is_active' => 'boolean',
+        'is_searchable' => 'boolean',
+        'is_unique_text' => 'boolean',
+    ];
+
     /**
      * @var array Relations BelongTo
      */
@@ -122,10 +134,10 @@ class Product extends Model
         'isbn'  => ['alpha_dash', 'max:25', 'unique:smartshop_products'],
         'price' => ['required', 'numeric'],
         // Sizes
-        'width'     => ['numeric'],
-        'height'    => ['numeric'],
-        'depth'     => ['numeric'],
-        'weight'    => ['numeric'],
+        'width'     => [],
+        'height'    => [],
+        'depth'     => [],
+        'weight'    => [],
     ];
 
     //
