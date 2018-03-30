@@ -16,7 +16,6 @@ return [
         'access_bindings' => 'Управление связями',
         'access_binding_types' => 'Управление типами связей',
         'access_properties' => 'Управление свойствами товара',
-        'access_import_templates' => 'Управление шаблонами импорта',
         'access_settings' => 'Управление настройками каталога',
     ],
 

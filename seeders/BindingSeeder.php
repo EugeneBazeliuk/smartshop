@@ -19,7 +19,7 @@ class BindingSeeder extends \October\Rain\Database\Updates\Seeder
         // Base
         'name' => 'First Binding Type',
         'code' => 'first-binding-type',
-        'page' => 'test/page'
+        'page' => 'test/page',
     ];
 
     public function run()
@@ -27,5 +27,25 @@ class BindingSeeder extends \October\Rain\Database\Updates\Seeder
         $binding = Binding::make($this->bindings);
         $binding->binding_type = BindingType::create($this->bindingType);
         $binding->save();
+
+        BindingType::create([
+            'name' => 'Автор',
+            'code' => 'author',
+        ]);
+
+        BindingType::create([
+            'name' => 'Noname',
+            'code' => 'Artist',
+        ]);
+
+        BindingType::create([
+            'name' => 'Переводчик',
+            'code' => 'Translater',
+        ]);
+
+        BindingType::create([
+            'name' => 'Редактор',
+            'code' => 'Editor',
+        ]);
     }
 }

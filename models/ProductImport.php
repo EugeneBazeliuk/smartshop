@@ -3,7 +3,6 @@
 use Event;
 use Exception;
 use BackendAuth;
-use ApplicationException;
 use Backend\Models\ImportModel;
 
 /**
@@ -41,6 +40,8 @@ class ProductImport extends ImportModel
 
     protected $bindingNameCache = [];
 
+    protected $bindingTypeCodeCache = [];
+
     protected $categoryNameCache = [];
 
     protected $propertyNameCache = [];
@@ -70,6 +71,7 @@ class ProductImport extends ImportModel
                 }
 
                 // Find or create
+                /** @var \Smartshop\Catalog\Models\Product $product */
                 $product = Product::make();
                 $product = $this->findDuplicateProduct($data) ?: $product;
 
@@ -84,24 +86,30 @@ class ProductImport extends ImportModel
                     'publisher_set',
                 ];
 
-                foreach (array_except($data, $exceptAttributes) as $attribute => $value) {
-                    $value ? $product->{$attribute} = $value : null;
+                foreach (array_except($data, $exceptAttributes) as $key => $value) {
+                    $value ? $product->{$key} = $value : null;
                 }
 
-                $product->publisher = $this->findPublisherFromName($data);
-                $product->publisher_set = $this->findPublisherSetFromName($data);
+                $product->publisher = $this->getPublisherId($data);
+                $product->publisher_set = $this->getPublisherSetId($data);
 
                 // Save
                 $product->save();
 
-                // Sync categories
-                $product->categories()->sync($this->getCategoriesIds($data));
+                // Sync Bindings
+                if ($bindings = array_get($data, 'bindings')) {
+                    $product->bindings()->sync($this->getBindingsIds($bindings));
+                }
 
-                // Sync bindings
-                // $product->bindings()->sync($this->getBindingsIds($data));
+                // Sync Categories
+                if ($categories = array_get($data, 'categories')) {
+                    $product->categories()->sync($this->getCategoriesIds($categories));
+                }
 
-                // Sync properties
-                // $product->properties()->sync($this->getPropertiesIds($data));
+                // Sync Properties
+                if ($properties = array_get($data, 'properties')) {
+                    $product->properties()->sync($this->getPropertiesIds($properties));
+                }
 
                 //
                 // Log results
@@ -125,6 +133,215 @@ class ProductImport extends ImportModel
         ]);
     }
 
+    /**
+     * Find duplicate of Product
+     *
+     * @param array $data
+     * @return \October\Rain\Database\Model
+     */
+    private function findDuplicateProduct($data)
+    {
+        return array_get($data, 'id')
+            ? Product::find(array_get($data, 'id'))
+            : Product::where('sku', array_get($data, 'sku'))->first();
+    }
+
+    /**
+     * Get Publisher id by name
+     *
+     * @param array $data
+     * @return int
+     */
+    private function getPublisherId($data)
+    {
+        if (!$name = array_get($data, 'publisher')) {
+            return null;
+        }
+
+        if (isset($this->publisherNameCache[$name])) {
+            return $this->publisherNameCache[$name];
+        }
+
+        $publisher = Publisher::firstOrCreate(['name' => $name]);
+
+        return $this->publisherNameCache[$name] = $publisher->id;
+    }
+
+    /**
+     * Get PublisherSet id by name
+     *
+     * @param array $data
+     * @return int
+     * @throws Exception
+     */
+    private function getPublisherSetId($data)
+    {
+        if (!$publisherSetName = array_get($data, 'publisher_set')) {
+            return null;
+        }
+
+        if (isset($this->publisherSetNameCache[$publisherSetName])) {
+            return $this->publisherSetNameCache[$publisherSetName];
+        }
+
+        if (!$publisherId = $this->getPublisherId($data)) {
+            throw new Exception('Не удалось получить Издательство для создания серии');
+        }
+
+        $publisherSet = PublisherSet::firstOrCreate([
+            'name' => $publisherSetName,
+            'publisher_id' => $publisherId,
+        ]);
+
+        return $this->publisherSetNameCache[$publisherSetName] = $publisherSet->id;
+    }
+
+    /**
+     * Get Bindings ids
+     *
+     * @param string $bindingsString
+     * @return array
+     * @throws \Exception
+     */
+    private function getBindingsIds($bindingsString)
+    {
+        $ids = [];
+
+        $bindings = $this->decodeArrayValue($bindingsString);
+
+        foreach ($bindings as $encodedBinding) {
+
+            if (!$binding = $this->decodeTwoLevelArrayValue($encodedBinding)) {
+                continue;
+            }
+
+            if (isset($this->bindingNameCache[$binding['code']][$binding['value']])) {
+
+                $ids[] = $this->bindingNameCache[$binding['code']][$binding['value']];
+
+            } else {
+
+                $model = Binding::firstOrCreate([
+                    'name' => $binding['value'],
+                    'binding_type_id' => $this->getBindingTypeId($binding['code']),
+                ]);
+
+                $ids[] = $this->bindingNameCache[$binding['code']][$binding['value']] = $model->id;
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get BindingType id by code
+     *
+     * @param string $code
+     *
+     * @return int
+     * @throws \Exception
+     * @todo Translate error
+     */
+    private function getBindingTypeId($code)
+    {
+        if (isset($this->bindingTypeCodeCache[$code])) {
+            return $this->bindingTypeCodeCache[$code];
+        }
+
+        if ($model = BindingType::whereCode($code)->first()) {
+            return $this->bindingTypeCodeCache[$code] = $model->id;
+        }
+
+        throw new Exception('Не удалось определить тип связи');
+    }
+
+    /**
+     * Get Categories ids
+     *
+     * @param string $categoriesString
+     * @return array
+     */
+    private function getCategoriesIds($categoriesString)
+    {
+        $ids = [];
+        $categories = $this->decodeArrayValue($categoriesString);
+
+        foreach ($categories as $name) {
+            if (isset($this->categoryNameCache[$name])) {
+                $ids[] = $this->categoryNameCache[$name];
+            } else {
+                $model = Category::firstOrCreate(['name' => $name]);
+                $ids[] = $this->categoryNameCache[$name] = $model->id;
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get Properties
+     *
+     * @param string $propertiesString
+     * @return array
+     */
+    private function getPropertiesIds($propertiesString)
+    {
+        $ids = [];
+        $properties = $this->decodeArrayValue($propertiesString);
+
+        foreach ($properties as $encodedProperty) {
+
+            if (!$property = $this->decodeTwoLevelArrayValue($encodedProperty)) {
+                continue;
+            }
+
+            if (isset($this->propertyNameCache[$property['code']])) {
+                $id = $this->propertyNameCache[$property['code']];
+            } else {
+                $model = Property::firstOrCreate(['code' => $property['code']]);
+                $id = $this->propertyNameCache[$property['code']] = $model->id;
+            }
+
+            $ids[$id] = [
+                'property_value_id' => $this->getPropertyValueId($id, $property['value'])
+            ];
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get PropertyValue id
+     *
+     * @param int $propertyId
+     * @param string $value
+     *
+     * @return int
+     */
+    private function getPropertyValueId($propertyId, $value)
+    {
+        if (isset($this->propertyValueCache[$propertyId][$value])) {
+            return $this->propertyValueCache[$propertyId][$value];
+        } else {
+
+            $model = PropertyValue::firstOrCreate([
+                'value' => $value,
+                'property_id' => $propertyId
+            ]);
+
+            return $this->propertyValueCache[$propertyId][$value] = $model->id;
+        }
+    }
+
+    //
+    //
+    //
+
+    /**
+     * Set ImportTemplate
+     *
+     * @param $template
+     */
     public function setImportTemplate($template)
     {
         $this->template = $template;
@@ -154,274 +371,15 @@ class ProductImport extends ImportModel
         return $author ? $author->id : null;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * @param $data
-     * @return \October\Rain\Database\Model
-     */
-    private function findDuplicateProduct($data)
-    {
-        return array_get($data, 'id')
-            ? Product::find(array_get($data, 'id'))
-            : Product::where('sku', array_get($data, 'sku'))->first();
-    }
-
-    /**
-     * Find Publisher by name
-     * @param $data
-     * @return \October\Rain\Database\Model|mixed|null
-     */
-    private function findPublisherFromName($data)
-    {
-        if (!$name = array_get($data, 'publisher')) {
-            return null;
-        }
-
-        if (isset($this->publisherNameCache[$name])) {
-            return $this->publisherNameCache[$name];
-        }
-
-        $publisher = Publisher::firstOrCreate(['name' => $name]);
-
-        return $this->publisherNameCache[$name] = $publisher;
-    }
-
-    /**
-     * Get Publisher Id
-     */
-    private function getPublisherId($data)
-    {
-        $publisher = $this->findPublisherFromName($data);
-
-        return $publisher ? $publisher->id : null;
-    }
-
-    /**
-     * Find PublisherSet by name
-     * @param $data
-     * @return \October\Rain\Database\Model|mixed|null
-     */
-    private function findPublisherSetFromName($data)
-    {
-        if (!$name = array_get($data, 'publisher_set')) {
-            return null;
-        }
-
-        if (isset($this->publisherSetNameCache[$name])) {
-            return $this->publisherSetNameCache[$name];
-        }
-
-        $publisherSet = PublisherSet::firstOrCreate([
-            'name' => $name,
-            'publisher_id' => $this->getPublisherId($data),
-        ]);
-
-        return $this->publisherSetNameCache[$name] = $publisherSet;
-    }
-
-    /**
-     * Get Bindings id's
-     * @param $data
-     * @return array
-     */
-    private function getBindingsIds($data)
-    {
-        $ids = [];
-        $bindings = $this->decodeArrayValue(array_get($data, 'bindings'));
-
-        foreach ($bindings as $encodedBinding)
-        {
-            $result = $this->decodeTwoLevelArrayValue($encodedBinding);
-
-            $bindingType = $result['code'];
-            $bindingName = $result['value'];
-
-            if (isset($this->bindingNameCache[$bindingType][$bindingName])) {
-                $ids[] = $this->bindingNameCache[$bindingType][$bindingName];
-            } else {
-                $model = Binding::firstOrCreate([
-                    'name' => $bindingName,
-                    'binding_type' => $this->getBindingTypeIdByCode($bindingType)
-                ]);
-                $ids[] = $this->bindingNameCache[$bindingType][$bindingName] = $model->id;
-            }
-        }
-
-        return $ids;
-    }
-
-    /**
-     *
-     */
-    private function getBindingTypeIdByCode($code)
-    {
-        if ($bindingType = BindingType::whereCode($code)->first()) {
-            return $bindingType->id;
-        }
-
-        $model = BindingType::create([
-            'name' => $code,
-            'code' => $code,
-        ]);
-
-        return $model->id;
-    }
-
-
-
-    /**
-     * Get Categories id's
-     * @param $data
-     * @return array
-     */
-    private function getCategoriesIds($data)
-    {
-        $ids = [];
-        $categories = $this->decodeArrayValue(array_get($data, 'categories'));
-
-        foreach ($categories as $name) {
-            if (isset($this->categoryNameCache[$name])) {
-                $ids[] = $this->categoryNameCache[$name];
-            } else {
-                $model = Category::firstOrCreate(['name' => $name]);
-                $ids[] = $this->categoryNameCache[$name] = $model->id;
-            }
-        }
-
-        return $ids;
-    }
-
     /**
      * Decode Two Level Array Value
      *
      * @param string $string
-     * @return array|bool
+     * @return array|null
      */
     private function decodeTwoLevelArrayValue($string)
     {
         $data = $this->decodeArrayValue($string, self::TWO_LEVEL_DELIMETER);
-
-        if (is_array($data) && isset($data[0], $data[1])) {
-            return ['code' => $data[0], 'value' => $data[1]];
-        }
-
-        return false;
+        return count($data) == 2 ? ['code' => $data[0], 'value' => $data[1]] : null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    /**
-//     * Get Properties Ids
-//     */
-//    private function getPropertiesIds($data)
-//    {
-//        $ids = [];
-//        $properties = $this->decodeArrayValue(array_get($data, 'properties'));
-//
-//        foreach ($properties as $property) {
-//
-//            $property = $this->decodeArrayValue($property, '::');
-//            $propertyCode = isset($property[0]) ? $property[0] : null;
-//            $propertyValue = isset($property[1]) ? $property[1] : null;
-//
-//            if (is_null($propertyCode) && is_null($propertyValue)) {
-//                continue;
-//            }
-//
-//            if (isset($this->propertyNameCache[$propertyCode])) {
-//                $id = $this->propertyNameCache[$propertyCode];
-//            } else {
-//                $model = ProductProperty::firstOrCreate([]);
-//                $id = $this->propertyNameCache[$propertyCode] = $model->id;
-//            }
-//
-//
-////            $str = strpos($property, "::");
-////
-////            // $propertyCode = ;
-////
-////            $test1 = strstr($property, '::',true);
-////
-////            $propertyCode2 = substr($property, 0, stristr($property, '::'));
-////
-////
-////            $propertyValue = '';
-//
-//
-////            $property = $this->decodeArrayValue($property, '::');
-////
-////            $propertyCode = isset($property[0]) ? $property[0] : null;
-////            $propertyValue = isset($property[1]) ? $property[1] : null;
-////
-////            if (is_null($propertyCode) && is_null($propertyValue)) {
-////                continue;
-////            }
-////
-////            if (isset($this->propertyNameCache[$propertyCode])) {
-////                $id = $this->propertyNameCache[$propertyCode];
-////            } else {
-////                $model = ProductProperty::firstOrCreate([
-////                    'name' => $propertyCode,
-////                    'code' => $propertyCode
-////                ]);
-////                $id = $this->propertyNameCache[$propertyCode] = $model->id;
-////            }
-////
-////            $ids[$id] = [ 'property_value_id' =>
-////                    $this->getProductPropertyValueId($propertyCode, $propertyValue)
-////            ];
-//        }
-//
-//        return $ids;
-//    }
-//
-//    /**
-//     * Get ProductPropertyValue by code
-//     * @return int
-//     */
-//    private function getProductPropertyValueId($propertyId, $value)
-//    {
-//        if (isset($this->propertyValueCache[$propertyId][$value])) {
-//            return $this->propertyValueCache[$propertyId][$value];
-//        } else {
-//            $model = ProductProperty::firstOrCreate([
-//                'product_property_id' => $propertyId,
-//                'value' => $value
-//            ]);
-//            return $this->propertyValueCache[$propertyId][$value] = $model->id;
-//        }
-//    }
 }

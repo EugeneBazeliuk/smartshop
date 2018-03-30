@@ -99,16 +99,6 @@ class Plugin extends PluginBase
                 'permissions' => ['smartshop.catalog.access_binding_types'],
                 'keywords'    => 'binding, binding type',
             ],
-            'import_templates' => [
-                'label'       => 'smartshop.catalog::lang.import_templates.menu_label',
-                'description' => 'smartshop.catalog::lang.import_templates.menu_description',
-                'category'    => 'smartshop.catalog::lang.plugin.name',
-                'icon'        => 'icon-globe',
-                'url'         => Backend::url('smartshop/catalog/importtemplates'),
-                'order'       => 200,
-                'permissions' => ['smartshop.catalog.access_import_templates'],
-                'keywords'    => 'import, import template',
-            ]
         ];
     }
 
@@ -151,10 +141,6 @@ class Plugin extends PluginBase
                 'tab'   => 'smartshop.catalog::lang.plugin.tab',
                 'label' => 'smartshop.catalog::lang.plugin.access_product_properties'
             ],
-            'smartshop.catalog.access_import_templates' => [
-                'tab'   => 'smartshop.catalog::lang.plugin.tab',
-                'label' => 'smartshop.catalog::lang.plugin.access_import_templates'
-            ]
         ];
     }
 }

@@ -5,6 +5,17 @@ use Model;
 /**
  * Binding Model
  *
+ * @mixin \Eloquent
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string $description
+ * @property boolean $is_active
+ * @property boolean $is_searchable
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ *
  * @property \SmartShop\Catalog\Models\BindingType $binding_type
  * @property \October\Rain\Database\Collection $products
  * @property \SmartShop\Catalog\Models\Meta $meta
@@ -14,8 +25,6 @@ use Model;
  * @method \October\Rain\Database\Relations\BelongsToMany products
  * @method \October\Rain\Database\Relations\MorphOne meta
  * @method \October\Rain\Database\Relations\AttachOne image
- *
- * @mixin \Eloquent
  */
 class Binding extends Model
 {
@@ -42,7 +51,7 @@ class Binding extends Model
         'slug',
         'description',
         // Relations
-        'binding_type',
+        'binding_type_id',
         // States
         'is_active',
         'is_searchable',

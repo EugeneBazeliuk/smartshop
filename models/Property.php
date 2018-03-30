@@ -66,7 +66,7 @@ class Property extends Model
      */
     public $rules = [
         // Base
-        'name'  => 'required|max:255',
+        'name'  => 'max:255',
         'code'  => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:smartshop_properties'],
         'description' => '',
         // States

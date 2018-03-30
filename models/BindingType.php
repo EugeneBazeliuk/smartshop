@@ -6,11 +6,21 @@ use Cms\Classes\Page;
 /**
  * BindingType Model
  *
+ * @mixin \Eloquent
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $code
+ * @property string $page
+ * @property string $description
  * @property \October\Rain\Database\Collection bindings
  *
  * @method \October\Rain\Database\Relations\HasMany bindings
- *
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\BindingType whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\BindingType whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\BindingType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\BindingType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Smartshop\Catalog\Models\BindingType wherePage($value)*
  */
 class BindingType extends Model
 {

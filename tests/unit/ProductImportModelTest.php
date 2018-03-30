@@ -2,14 +2,17 @@
 
 use PluginTestCase;
 use Smartshop\Catalog\Models\Product;
+use Smartshop\Catalog\Models\Binding;
 use Smartshop\Catalog\Models\ProductImport;
+use Smartshop\Catalog\Models\BindingType;
+use Smartshop\Catalog\Models\Property;
 
 /**
  * Class MetaModelTest
  */
 class ProductImportModelTest extends PluginTestCase
 {
-    public static $importData = [
+    public static $data = [
         'title' => 'Product name',
         'sku' => '123456',
         'isbn' => '12345678',
@@ -20,12 +23,6 @@ class ProductImportModelTest extends PluginTestCase
         'height' => 11.12,
         'depth' => 12.13,
         'weight' => 13.14,
-        // Relations
-        'bindings' => 'binding_type_1::binding_name_1',
-        'categories' => 'category_1|category_2',
-        'properties' => 'property::value',
-        'publisher' => 'publisher_name',
-        'publisher_set' => 'publisher_set_name',
         // States
         'is_active' => true,
         'is_searchable' => true,
@@ -34,51 +31,182 @@ class ProductImportModelTest extends PluginTestCase
 
     public function test_import_product()
     {
-        Product::truncate();
+        // Run Import
+        $results = $this->runImport(self::$data);
 
-        $importModel = new ProductImport;
-        $importModel->importData([
-            self::$importData
+        // Check ProductImport results
+        $this->checkResults($results, 1, 0, 0);
+
+        // Get imported model
+        $model = Product::where('sku', self::$data['sku'])->first();
+
+        // Check model attributes
+        foreach (self::$data as $key => $val) {
+            $this->assertEquals($val, $model->{$key});
+        }
+    }
+
+    public function test_import_product_publisher()
+    {
+        // Prepare Import data
+        $data = array_merge(self::$data, [
+            'publisher' => 'Test Publisher Name',
         ]);
 
-        $results = $importModel->getResultStats();
+        // Run Import
+        $results = $this->runImport($data);
 
-        // Assert created count
-        $this->assertEquals(1, $results->created);
-        // Assert updated count
-        $this->assertEquals(0, $results->updated);
-        // Assert errors count
-        $this->assertEquals(0, $results->errorCount);
+        // Check ProductImport results
+        $this->checkResults($results, 1, 0, 0);
 
-        $model = Product::whereSku(self::$importData['sku'])->first();
+        // Find Model
+        $model = Product::where('sku', $data['sku'])->first();
 
-        // Assert Product model fields
-        $this->assertEquals(self::$importData['title'], $model->title);
-        $this->assertEquals(self::$importData['sku'], $model->sku);
-        $this->assertEquals(self::$importData['isbn'], $model->isbn);
-        $this->assertEquals(self::$importData['price'], $model->price);
-        $this->assertEquals(self::$importData['width'], $model->width);
-        $this->assertEquals(self::$importData['height'], $model->height);
-        $this->assertEquals(self::$importData['depth'], $model->depth);
-        $this->assertEquals(self::$importData['weight'], $model->weight);
-        $this->assertEquals(self::$importData['is_active'], $model->is_active);
-        $this->assertEquals(self::$importData['is_searchable'], $model->is_searchable);
-        $this->assertEquals(self::$importData['is_unique_text'], $model->is_unique_text);
+        // Check Publisher
+        $this->assertNotNull($model->publisher, 'Publisher does not created');
+        $this->assertEquals($data['publisher'], $model->publisher->name);
+    }
 
-        // Assert Binding
-        // $this->assertDatabaseHas('smartshop_bindings', ['name' => 'binding_name_1']);
+    /**
+     *
+     */
+    public function test_import_product_publisher_set()
+    {
+        // Prepare Import data
+        $data = array_merge(self::$data, [
+            'publisher' => 'Test Publisher Name',
+            'publisher_set' => 'Test Publisher Set name',
+        ]);
 
+        // Run Import
+        $results = $this->runImport($data);
 
-//        // Assert Binding Relation
-//        $this->assertEquals(1, $model->bindings()->count());
-//
-//        // Assert Categories Relation
-//        $this->assertEquals(2, $model->categories()->count());
-//
-//        // Assert Publisher model
-//        $this->assertEquals(self::$importData['publisher'], $model->publisher->name);
-//
-//        // Assert PublisherSet model
-//        $this->assertEquals(self::$importData['publisher_set'], $model->publisher_set->name);
+        // Check ProductImport results
+        $this->checkResults($results, 1, 0, 0);
+
+        // Find Product
+        $model = Product::where('sku', $data['sku'])->first();
+
+        // Assert Publisher
+        $this->assertNotNull($model->publisher_set, 'PublisherSet does not created');
+        $this->assertEquals($data['publisher_set'], $model->publisher_set->name);
+    }
+
+    /**
+     *
+     */
+    public function test_import_product_bindings()
+    {
+        // Prepare Import data
+        $data = array_merge(self::$data, [
+            'bindings' => 'test_code::Test Binding 1|test_code::Test Binding 2',
+        ]);
+
+        // Prepare BindingType
+        BindingType::create([
+            'name' => 'Test Name',
+            'code' => 'test_code',
+        ]);
+
+        // Run Import
+        $results = $this->runImport($data);
+
+        // Check ProductImport results
+        $this->checkResults($results, 1, 0, 0);
+
+        // Find Models
+        $model = Product::where('sku', $data['sku'])->first();
+        $binding_1 = Binding::whereName('Test Binding 1')->first();
+        $binding_2 = Binding::whereName('Test Binding 2')->first();
+
+        // Assert Bindings
+        $this->assertNotNull($binding_1, 'Binding 1 does not created');
+        $this->assertEquals('test_code', $binding_1->binding_type->code);
+        $this->assertNotNull($binding_2, 'Binding 2 does not created');
+        $this->assertEquals('test_code', $binding_2->binding_type->code);
+        $this->assertEquals(2, $model->bindings()->count(), 'Product Bindings does not created');
+    }
+
+    /**
+     *
+     */
+    public function test_import_product_categories()
+    {
+        // Prepare Import data
+        $data = array_merge(self::$data, [
+            'categories' => 'Test category 1|Test category 2',
+        ]);
+
+        // Run Import
+        $results = $this->runImport($data);
+
+        // Check ProductImport results
+        $this->checkResults($results, 1, 0, 0);
+
+        // Find Product
+        $model = Product::where('sku', $data['sku'])->first();
+
+        // Assert Categories
+        $this->assertEquals(2, $model->categories()->count(), 'Categories does not created');
+    }
+
+    /**
+     *
+     */
+    public function test_import_product_properties()
+    {
+        // Prepare Import data
+        $data = array_merge(self::$data, [
+            'properties' => 'test_property::Test Value 1|test_property::Test Value 2',
+        ]);
+
+        // Run Import
+        $results = $this->runImport($data);
+
+        // Check ProductImport results
+        $this->checkResults($results, 1, 0, 0);
+
+        // Find Product
+        $product = Product::where('sku', $data['sku'])->first();
+
+        // Find Property
+        $property = Property::where('code', 'test_property')->first();
+
+        // Assert Product Properties
+        $this->assertEquals(1, $product->properties()->count(), 'Product Properties does not attached');
+        $this->assertEquals(2, $property->values()->count(), 'PropertyValues does not created');
+    }
+
+    //
+    //
+    //
+
+    /**
+     * Run ProductImport
+     *
+     * @param $data
+     * @return object
+     */
+    private function runImport($data)
+    {
+        $importModel = new ProductImport;
+        $importModel->importData([$data]);
+
+        return $importModel->getResultStats();
+    }
+
+    /**
+     * Check ProductImport results
+     *
+     * @param object $results
+     * @param int $created
+     * @param int $updated
+     * @param int $errors
+     */
+    private function checkResults($results, $created, $updated, $errors)
+    {
+        $this->assertEquals($results->created, $created);
+        $this->assertEquals($results->updated, $updated);
+        $this->assertEquals($results->errorCount, $errors);
     }
 }

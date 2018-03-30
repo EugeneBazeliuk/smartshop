@@ -12,7 +12,7 @@ class CreatePropertiesTable extends Migration
             $table->engine = 'InnoDB';
             // Base
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('code')->unique();
             $table->text('description')->nullable();
             // Sortable
